@@ -1,6 +1,6 @@
 # RPGems
 
-A system to create and play a RPG game
+A system to create and play an RPG game
 
 ## Environment Setup
 
