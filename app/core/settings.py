@@ -1,7 +1,9 @@
-import urllib.parse
+from os import environ
+
 from functools import lru_cache
 
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     # Application
@@ -10,12 +12,9 @@ class Settings(BaseSettings):
     DEBUG: bool = True
 
     # Application configuration
-    env: str  # dev, test, ci, prod
+    env: str = environ.get("FASTAPI_ENV", "dev")
 
-    model_config = SettingsConfigDict(
-        env_prefix="APP_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
-    )
 
 @lru_cache
-def get_settings(env: str | None = None) -> Settings:
-    return Settings()  # type: ignore
+def get_settings() -> Settings:
+    return Settings()
