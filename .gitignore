@@ -1,5 +1,4 @@
 *.pyc
-.env
 .idea/
 .python-version
 poetry.lock
