@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "rpgems"
 version = "0.1.0"
-description = ""
-authors = ["Marco Gomes <malgomes@gmail.com>"]
+description = "A system to create and play an RPG game"
+authors = ["Marco Gomes", "Rafael Ribeiro", "Teles"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
