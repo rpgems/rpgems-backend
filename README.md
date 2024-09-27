@@ -31,3 +31,27 @@ Now that your environment is set, you can run the following command:
 
 And go to the browser on the following [location](http://localhost:8080/docs).
 There you can find a documentation for the available endpoints in a Swagger like format.
+
+## Using docker to run the environment
+
+In order to have our system running, we'll need the following requirements:
+
+- a frontend application (at the moment we're using a nginx container as placeholder)
+- a backend application
+- a database instance (a postgresql db engine version 16.4)
+
+We're going to use [Docker](https://www.docker.com/) to emulate our system in a local environment.
+In order to use it, you'll need to have at least docker compose version `2.29.x`.
+
+In a terminal, run the following command:
+
+`docker-compose -f ./docker/docker-compose.yaml up`
+
+This will pull and build all required containers.
+After the command finishes its execution, you can access the fronted using the browser in the following address:
+
+`http://localhost:8000`
+
+If you need to access the backend rest API, you can access it using the following url:
+
+`http://localhost`

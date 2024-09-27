@@ -8,7 +8,7 @@ For local development, we'll be using [Docker](https://www.docker.com/) containe
  - One container will have the backend service running
  - One container will have the frontend service running
 
-We'll use a `docker-compose.yml` file that will be responsible to orchestrate the environment required to run this system
+We'll use a `docker-compose.yaml` file that will be responsible to orchestrate the environment required to run this system
 
 ## Python package management
 
