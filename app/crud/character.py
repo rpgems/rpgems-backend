@@ -1,33 +1,25 @@
 from typing import List
 
+from app.crud.character_attribute import get_character_extended_attributes
+from app.crud.character_class import get_character_class
 from app.exceptions.character import CharacterNotFound, BubblesException
-from app.character.model import Character, CharacterClass, Attribute
+from app.models.character import Character
 
 
-def get_character_class_attributes(class_id: int) -> list:
-    name = f"strength"
-    description = f"character strength"
-    skill_points = 50
-    attribute = Attribute(id=1, name=name, description=description, skill_points=skill_points)
-    result = [attribute]
-    return result
+def get_characters_linked_to_attribute(attribute_id: int) -> List[int] | None:
+    # TODO execute an SQL to check if there's a class linked to the attribute
+    if attribute_id == 123:
+        return [1]
+    else:
+        return None
 
 
-def get_character_extended_attributes(character_id: int) -> list:
-    name = f"strength"
-    description = f"character strength"
-    skill_points = 50
-    attribute = Attribute(id=1, name=name, description=description, skill_points=skill_points)
-    result = [attribute]
-    return result
-
-
-def get_character_class(character_id: int) -> CharacterClass:
-    character_class_id = 1
-    name = f"Elf"
-    class_attributes = get_character_class_attributes(character_class_id)
-    character_class = CharacterClass(id=character_class_id, name=name, attributes=class_attributes)
-    return character_class
+def get_characters_linked_to_class(class_id: int) -> List[int] | None:
+    # TODO execute an SQL to check if there's a class linked to the attribute
+    if class_id == 123:
+        return [1]
+    else:
+        return None
 
 
 def get_character_by_id(character_id: int) -> Character:
@@ -55,13 +47,15 @@ def list_all_characters() -> List[Character]:
 
 def search_characters_by_name(name_search: str) -> List[Character]:
     # TODO should add the logic to actually search characters by name
+    name_search.capitalize()
     character = get_character_by_id(1)
     return [character]
 
 
 def create_character(character: Character) -> int:
     # TODO should add the logic to actually add character to the DB
-    return 2
+    character.id = 2
+    return character.id
 
 
 def delete_character_by_id(character_id: int) -> None:

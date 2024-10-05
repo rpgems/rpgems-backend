@@ -1,19 +1,7 @@
 from typing import List, Optional
-
 from pydantic import BaseModel
-
-
-class Attribute(BaseModel):
-    id: int
-    name: str
-    description: str
-    skill_points: int
-
-
-class CharacterClass(BaseModel):
-    id: int
-    name: str
-    attributes: List[Attribute]
+from app.models.character_attribute import Attribute
+from app.models.character_class import CharacterClass
 
 
 class Character(BaseModel):

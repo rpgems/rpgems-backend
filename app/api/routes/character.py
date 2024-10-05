@@ -81,8 +81,7 @@ async def list_characters_by_name(name_search: str) -> List[CharacterResponse]:
     responses={
         status.HTTP_201_CREATED: {"description": "Character created"},
         status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
-    },
-    response_model=JSONResponse,
+    }
 )
 async def create_new_character(character_definition: Character) -> JSONResponse:
     try:
@@ -100,8 +99,7 @@ async def create_new_character(character_definition: Character) -> JSONResponse:
         status.HTTP_204_NO_CONTENT: {"description": "Character deleted"},
         status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
         status.HTTP_404_NOT_FOUND: {"description": "Character not found"}
-    },
-    response_model=JSONResponse,
+    }
 )
 async def delete_character(character_id: int) -> JSONResponse:
     try:
@@ -121,8 +119,7 @@ async def delete_character(character_id: int) -> JSONResponse:
         status.HTTP_200_OK: {"description": "Character updated"},
         status.HTTP_201_CREATED: {"description": "Character created"},
         status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
-    },
-    response_model=JSONResponse,
+    }
 )
 async def update_character(character_id: int, character_definition: Character) -> JSONResponse:
     try:
@@ -130,7 +127,7 @@ async def update_character(character_id: int, character_definition: Character) -
         content = {"message": "Character updated"}
         headers = {"Content-Type": "application/json"}
         response = JSONResponse(content=content, status_code=status.HTTP_200_OK, headers=headers)
-    except CharacterNotFound as e:
+    except CharacterNotFound:
         character_id = create_character(character_definition)
         content = {"message": "Character updated"}
         headers = {"Content-Type": "application/json", "Location": f"/character/{character_id}"}
