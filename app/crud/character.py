@@ -6,22 +6,6 @@ from app.exceptions.character import CharacterNotFound, BubblesException
 from app.models.character import Character
 
 
-def get_characters_linked_to_attribute(attribute_id: int) -> List[int] | None:
-    # TODO execute an SQL to check if there's a class linked to the attribute
-    if attribute_id == 123:
-        return [1]
-    else:
-        return None
-
-
-def get_characters_linked_to_class(class_id: int) -> List[int] | None:
-    # TODO execute an SQL to check if there's a class linked to the attribute
-    if class_id == 123:
-        return [1]
-    else:
-        return None
-
-
 def get_character_by_id(character_id: int) -> Character:
     if character_id == 123:
         raise CharacterNotFound()

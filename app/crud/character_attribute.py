@@ -2,18 +2,16 @@ from typing import List
 
 from app.exceptions.character_attribute import CharacterAttributeNotFound, CharacterAttributeLinkedToResource, \
     BubblesException
-from app.crud.character import get_characters_linked_to_attribute
 from app.crud.character_class import get_classes_linked_to_attribute
 from app.models.character import Attribute
 
 
-def get_character_class_attributes(class_id: int) -> List[Attribute] | None:
-    name = f"strength"
-    description = f"character strength for {class_id}"
-    skill_points = 50
-    attribute = Attribute(id=1, name=name, description=description, skill_points=skill_points)
-    result = [attribute]
-    return result
+def get_characters_linked_to_attribute(attribute_id: int) -> List[int] | None:
+    # TODO execute an SQL to check if there's a class linked to the attribute
+    if attribute_id == 123:
+        return [1]
+    else:
+        return None
 
 
 def get_character_extended_attributes(character_id: int) -> List[Attribute]:

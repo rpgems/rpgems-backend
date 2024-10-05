@@ -1,9 +1,15 @@
 from typing import List
 
-from app.crud.character import get_characters_linked_to_class
-from app.crud.character_attribute import get_character_class_attributes, get_character_extended_attributes
 from app.exceptions.character_class import CharacterClassNotFound, CharacterClassLinkedToResource, BubblesException
 from app.models.character_class import CharacterClass
+
+
+def get_characters_linked_to_class(class_id: int) -> List[int] | None:
+    # TODO execute an SQL to check if there's a class linked to the attribute
+    if class_id == 123:
+        return [1]
+    else:
+        return None
 
 
 def get_classes_linked_to_attribute(attribute_id: int) -> List[int] | None:
@@ -17,8 +23,7 @@ def get_classes_linked_to_attribute(attribute_id: int) -> List[int] | None:
 def get_character_class(character_id: int) -> CharacterClass:
     character_class_id = 1
     name = f"Elf {character_id}"
-    class_attributes = get_character_class_attributes(character_class_id)
-    character_class = CharacterClass(id=character_class_id, name=name, attributes=class_attributes)
+    character_class = CharacterClass(id=character_class_id, name=name, attributes=None)
     return character_class
 
 
@@ -29,7 +34,7 @@ def get_class_by_id(class_id: int) -> CharacterClass:
         raise BubblesException()
     else:
         name = f"Solo mori"
-        character_class = CharacterClass(id=class_id, name=name, attributes=get_character_extended_attributes(class_id))
+        character_class = CharacterClass(id=class_id, name=name, attributes=None)
     return character_class
 
 
