@@ -12,12 +12,12 @@ def create_app() -> FastAPI:
         debug=settings.DEBUG,
         title=settings.name,
         version=settings.version,
-        description="A system to create and play a RPG game",
-        openapi_url=f"/openapi.json",
+        description=f"{settings.DESCRIPTION}",
+        openapi_url=f"{settings.API_V1_STR}/openapi.json",
     )
 
-    _app.include_router(main_router)
-    _app.include_router(character_router)
+    _app.include_router(main_router, prefix=settings.API_V1_STR)
+    _app.include_router(character_router, prefix=settings.API_V1_STR)
 
     return _app
 
