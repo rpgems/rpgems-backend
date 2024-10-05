@@ -4,9 +4,9 @@ from fastapi import APIRouter, status, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from app.character.exceptions import CharacterNotFound
-from app.character.model import Character
-from app.character.db import get_character_by_id, list_all_characters, search_characters_by_name, create_character, \
+from app.exceptions.character import CharacterNotFound
+from app.models.character import Character
+from app.crud.character import get_character_by_id, list_all_characters, search_characters_by_name, create_character, \
     delete_character_by_id, update_character_definition
 
 router = APIRouter(prefix="/character", tags=["character"])

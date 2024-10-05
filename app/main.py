@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.core.settings import get_settings
 
 from app.api import router as main_router
-from app import character
+from app.api.routes.character import router as character_router
 
 
 def create_app() -> FastAPI:
@@ -17,7 +17,7 @@ def create_app() -> FastAPI:
     )
 
     _app.include_router(main_router)
-    _app.include_router(character.router)
+    _app.include_router(character_router)
 
     return _app
 

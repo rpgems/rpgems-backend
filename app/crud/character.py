@@ -1,6 +1,6 @@
 from typing import List
 
-from app.character.exceptions import CharacterNotFound, BubblesException
+from app.exceptions.character import CharacterNotFound, BubblesException
 from app.character.model import Character, CharacterClass, Attribute
 
 
