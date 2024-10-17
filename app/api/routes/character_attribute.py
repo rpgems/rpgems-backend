@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from app.api.adapter.character_attribute import (adapt_get_attribute_by_id, adapt_list_all_attributes,
                                                  adapt_search_attributes_by_name, adapt_create_attribute,
                                                  adapt_delete_attribute_by_id, adapt_update_attribute_definition)
-from app.api.domain.character_attribute import CharacterAttributeResponse
+from app.api.schema.character_attribute import CharacterAttributeResponse
 
 
 router = APIRouter(prefix="/attribute", tags=["character_attribute"])

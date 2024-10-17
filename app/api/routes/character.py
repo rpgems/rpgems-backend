@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from app.api.adapter.character import (adapt_get_character_by_id, adapt_list_characters,
                                        adapt_search_characters_by_name, adapt_create_character,
                                        adapt_delete_character_by_id, adapt_update_character_definition)
-from app.api.domain.character import CharacterResponse
+from app.api.schema.character import CharacterResponse
 
 
 router = APIRouter(prefix="/character", tags=["character"])
