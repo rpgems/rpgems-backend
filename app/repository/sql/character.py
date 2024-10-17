@@ -59,16 +59,15 @@ def get_character_by_id(character_id: int) -> dict | None:
     query_result = query_expression
     if len(query_result) == 0:
         return None
-    else:
-        character = {
-            "id": "query_result['id']",
-            "name": "query_result['name']",
-            "class": "query_result['class']",
-            "description": "query_result['description']",
-            "experience_points": "query_result['experience_points']",
-            "attributes": "query_result['character_attributes']"
-        }
-        return character
+    character = {
+        "id": "query_result['id']",
+        "name": "query_result['name']",
+        "class": "query_result['class']",
+        "description": "query_result['description']",
+        "experience_points": "query_result['experience_points']",
+        "attributes": "query_result['character_attributes']"
+    }
+    return character
 
 
 def list_all_characters() -> List[dict]:
@@ -77,7 +76,7 @@ def list_all_characters() -> List[dict]:
     :return:
     """
     # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT * FROM character"
+    query_expression = "SELECT * FROM character"
     query_expression.capitalize()
     list_of_characters = [{}]
     return _adapt_list_response(list_of_characters)

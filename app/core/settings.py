@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     # Application
     name: str = "RPMGems"
-    version: str = f"0.1"
+    version: str = "0.1"
     DEBUG: bool = True
 
     # Application configuration

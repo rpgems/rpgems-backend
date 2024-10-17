@@ -22,13 +22,12 @@ def service_get_attribute_by_id(attribute_id: int) -> Attribute:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="attribute_id should be a number")
     if character_response is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="attribute not found")
-    else:
-        attribute = Attribute()
-        attribute.id = attribute_id
-        attribute.name = character_response['name']
-        attribute.description = character_response['description']
-        attribute.skill_points = character_response['skill_points']
-        return attribute
+    attribute = Attribute()
+    attribute.id = attribute_id
+    attribute.name = character_response['name']
+    attribute.description = character_response['description']
+    attribute.skill_points = character_response['skill_points']
+    return attribute
 
 
 def service_list_attributes() -> List[Attribute]:
@@ -39,16 +38,15 @@ def service_list_attributes() -> List[Attribute]:
     attribute_list_data: List[dict] = list_all_attributes()
     if len(attribute_list_data) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No attributes found")
-    else:
-        attribute_list: List[Attribute] = []
-        for attribute_data in attribute_list_data:
-            attribute: Attribute = Attribute()
-            attribute.id = attribute_data["id"]
-            attribute.name = attribute_data["name"]
-            attribute.description = attribute_data["description"]
-            attribute.skill_points = attribute_data["skill_points"]
-            attribute_list.append(attribute)
-        return attribute_list
+    attribute_list: List[Attribute] = []
+    for attribute_data in attribute_list_data:
+        attribute: Attribute = Attribute()
+        attribute.id = attribute_data["id"]
+        attribute.name = attribute_data["name"]
+        attribute.description = attribute_data["description"]
+        attribute.skill_points = attribute_data["skill_points"]
+        attribute_list.append(attribute)
+    return attribute_list
 
 
 def service_search_attributes_by_name(name: str) -> List[Attribute]:
@@ -59,20 +57,18 @@ def service_search_attributes_by_name(name: str) -> List[Attribute]:
     """
     if len(name) == 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Name should be a non-empty string")
-    else:
-        attribute_list_data: List[dict] = search_attributes_by_name(name)
-        if len(attribute_list_data) == 0:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No attributes found")
-        else:
-            attribute_list: List[Attribute] = []
-            for attribute_data in attribute_list_data:
-                attribute: Attribute = Attribute()
-                attribute.id = attribute_data["id"]
-                attribute.name = attribute_data["name"]
-                attribute.description = attribute_data["description"]
-                attribute.skill_points = attribute_data["skill_points"]
-                attribute_list.append(attribute)
-            return attribute_list
+    attribute_list_data: List[dict] = search_attributes_by_name(name)
+    if len(attribute_list_data) == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No attributes found")
+    attribute_list: List[Attribute] = []
+    for attribute_data in attribute_list_data:
+        attribute: Attribute = Attribute()
+        attribute.id = attribute_data["id"]
+        attribute.name = attribute_data["name"]
+        attribute.description = attribute_data["description"]
+        attribute.skill_points = attribute_data["skill_points"]
+        attribute_list.append(attribute)
+    return attribute_list
 
 
 def service_create_attribute(attribute_data: dict) -> int:
@@ -100,8 +96,7 @@ def service_delete_attribute_by_id(attribute_id: int) -> None:
         attribute_data: dict = get_attribute_by_id(attribute_id)
         if attribute_data is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Attribute not found")
-        else:
-            delete_attribute_by_id(attribute_id)
+        delete_attribute_by_id(attribute_id)
     else:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Attribute id should be a number")
 

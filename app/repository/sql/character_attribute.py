@@ -47,8 +47,8 @@ def get_attribute_by_id(attribute_id: int) -> dict | None:
     else:
         attribute = {
             "id": attribute_id,
-            "name": f"Solo mori",
-            "description": f"A dark elf from the far far away land",
+            "name": "Solo mori",
+            "description": "A dark elf from the far far away land",
             "skill_points": 100
         }
     return attribute
@@ -60,7 +60,7 @@ def list_all_attributes() -> List[dict]:
     :return:
     """
     # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT * FROM attribute"
+    query_expression = "SELECT * FROM attribute"
     query_expression.capitalize()
     list_of_attributes = [{}]
     return _adapt_list_response(list_of_attributes)

@@ -21,12 +21,11 @@ def service_get_class_by_id(class_id: int) -> CharacterClass:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="class_id should be a number")
     if class_response is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="class not found")
-    else:
-        character_class = CharacterClass()
-        character_class.id = class_id
-        character_class.name = class_response['name']
-        character_class.attributes = class_response['attributes']
-        return character_class
+    character_class = CharacterClass()
+    character_class.id = class_id
+    character_class.name = class_response['name']
+    character_class.attributes = class_response['attributes']
+    return character_class
 
 
 def service_list_classes() -> List[CharacterClass]:
@@ -37,15 +36,14 @@ def service_list_classes() -> List[CharacterClass]:
     class_list_data: List[dict] = list_all_classes()
     if len(class_list_data) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No classes found")
-    else:
-        class_list: List[CharacterClass] = []
-        for class_data in class_list_data:
-            character_class: CharacterClass = CharacterClass()
-            character_class.id = class_data["id"]
-            character_class.name = class_data["name"]
-            character_class.attributes = class_data["attributes"]
-            class_list.append(character_class)
-        return class_list
+    class_list: List[CharacterClass] = []
+    for class_data in class_list_data:
+        character_class: CharacterClass = CharacterClass()
+        character_class.id = class_data["id"]
+        character_class.name = class_data["name"]
+        character_class.attributes = class_data["attributes"]
+        class_list.append(character_class)
+    return class_list
 
 
 def service_search_classes_by_name(name: str) -> List[CharacterClass]:
@@ -56,19 +54,17 @@ def service_search_classes_by_name(name: str) -> List[CharacterClass]:
     """
     if len(name) == 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Name should be a non-empty string")
-    else:
-        class_list_data: List[dict] = search_classes_by_name(name)
-        if len(class_list_data) == 0:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No classes found")
-        else:
-            class_list: List[CharacterClass] = []
-            for class_data in class_list_data:
-                character_class: CharacterClass = CharacterClass()
-                character_class.id = class_data["id"]
-                character_class.name = class_data["name"]
-                character_class.attributes = class_data["attributes"]
-                class_list.append(character_class)
-            return class_list
+    class_list_data: List[dict] = search_classes_by_name(name)
+    if len(class_list_data) == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No classes found")
+    class_list: List[CharacterClass] = []
+    for class_data in class_list_data:
+        character_class: CharacterClass = CharacterClass()
+        character_class.id = class_data["id"]
+        character_class.name = class_data["name"]
+        character_class.attributes = class_data["attributes"]
+        class_list.append(character_class)
+    return class_list
 
 
 def service_create_class(class_data: dict) -> int:
@@ -96,8 +92,7 @@ def service_delete_class_by_id(class_id: int) -> None:
         class_data: dict = get_class_by_id(class_id)
         if class_data is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Class not found")
-        else:
-            delete_class_by_id(class_id)
+        delete_class_by_id(class_id)
     else:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Class id should be a number")
 

@@ -57,12 +57,11 @@ def get_class_by_id(class_id: int) -> dict | None:
     query_result = query_expression
     if len(query_result) == 0:
         return None
-    else:
-        character_class = {
-            "id": "query_result['id']",
-            "name": "query_result['name']"
-        }
-        return character_class
+    character_class = {
+        "id": "query_result['id']",
+        "name": "query_result['name']"
+    }
+    return character_class
 
 
 def list_all_classes() -> List[dict]:
@@ -71,7 +70,7 @@ def list_all_classes() -> List[dict]:
     :return:
     """
     # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT * FROM class"
+    query_expression = "SELECT * FROM class"
     query_expression.capitalize()
     list_of_classes = [{}]
     return _adapt_list_response(list_of_classes)
