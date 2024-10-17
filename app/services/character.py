@@ -1,3 +1,4 @@
+"""app.services.character module"""
 from typing import List
 
 from fastapi import HTTPException, status
@@ -8,6 +9,11 @@ from app.repository.sql.character import (get_character_by_id, list_all_characte
 
 
 def service_get_character_by_id(character_id: int) -> Character:
+    """
+
+    :param character_id:
+    :return:
+    """
     if isinstance(character_id, int):
         character_data: dict = get_character_by_id(character_id)
     else:
@@ -26,6 +32,10 @@ def service_get_character_by_id(character_id: int) -> Character:
 
 
 def service_list_characters() -> List[Character]:
+    """
+
+    :return:
+    """
     character_list_data: List[dict] = list_all_characters()
     if len(character_list_data) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No characters found")
@@ -44,6 +54,11 @@ def service_list_characters() -> List[Character]:
 
 
 def service_search_characters_by_name(name: str) -> List[Character]:
+    """
+
+    :param name:
+    :return:
+    """
     if len(name) == 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Name should be a non-empty string")
     else:
@@ -65,6 +80,11 @@ def service_search_characters_by_name(name: str) -> List[Character]:
 
 
 def service_create_character(character_data: dict) -> int:
+    """
+
+    :param character_data:
+    :return:
+    """
     keys = ["name", "character_class", "description", "experience_points", "character_attributes"]
     if all(key in keys for key in character_data.keys()):
         character_id: int = create_character(character_data)
@@ -76,6 +96,10 @@ def service_create_character(character_data: dict) -> int:
 
 
 def service_delete_character_by_id(character_id: int) -> None:
+    """
+
+    :param character_id:
+    """
     if isinstance(character_id, int):
         character_data: dict = get_character_by_id(character_id)
         if character_data is None:
@@ -87,6 +111,12 @@ def service_delete_character_by_id(character_id: int) -> None:
 
 
 def service_update_character_definition(character_id: int, definition: dict) -> dict:
+    """
+
+    :param character_id:
+    :param definition:
+    :return:
+    """
     keys = ["name", "character_class", "description", "experience_points", "character_attributes"]
     if not isinstance(character_id, int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Character id should be a number")

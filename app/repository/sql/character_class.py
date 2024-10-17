@@ -1,3 +1,4 @@
+"""app.repository.sql.character_class module"""
 from typing import List
 
 
@@ -14,6 +15,11 @@ def _adapt_list_response(list_of_classes: List[dict]) -> List[dict]:
 
 
 def get_classes_linked_to_attribute(attribute_id: int) -> List[dict]:
+    """
+
+    :param attribute_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT class_id FROM class_attributes WHERE attribute_id = {attribute_id}"
     query_expression.capitalize()
@@ -27,6 +33,11 @@ def get_classes_linked_to_attribute(attribute_id: int) -> List[dict]:
 
 
 def get_character_class(character_id: int) -> dict | None:
+    """
+
+    :param character_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT class FROM character WHERE id = {character_id}"
     query_expression.capitalize()
@@ -36,6 +47,11 @@ def get_character_class(character_id: int) -> dict | None:
 
 
 def get_class_by_id(class_id: int) -> dict | None:
+    """
+
+    :param class_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM class where id = {class_id}"
     query_result = query_expression
@@ -50,6 +66,10 @@ def get_class_by_id(class_id: int) -> dict | None:
 
 
 def list_all_classes() -> List[dict]:
+    """
+
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM class"
     query_expression.capitalize()
@@ -58,6 +78,11 @@ def list_all_classes() -> List[dict]:
 
 
 def search_classes_by_name(name_search: str) -> List[dict]:
+    """
+
+    :param name_search:
+    :return:
+    """
     # TODO should add the logic to actually search characters by name
     query_expression = f"SELECT * FROM class where name LIKE '{name_search}%'"
     query_expression.capitalize()
@@ -66,6 +91,11 @@ def search_classes_by_name(name_search: str) -> List[dict]:
 
 
 def create_class(character_class: dict) -> int:
+    """
+
+    :param character_class:
+    :return:
+    """
     # TODO should add the logic to actually add character to the DB
     query_expression = f"INSERT INTO class (name) values ('{character_class['name']}' RETURNING id"
     query_result = query_expression
@@ -77,12 +107,21 @@ def create_class(character_class: dict) -> int:
 
 
 def delete_class_by_id(class_id: int) -> None:
+    """
+
+    :param class_id:
+    """
     # TODO should add the logic to actually delete character in the DB
     query_expression = f"DELETE FROM class where id = {class_id}"
     query_expression.capitalize()
 
 
 def update_class_definition(class_id: int, class_definition: dict) -> None:
+    """
+
+    :param class_id:
+    :param class_definition:
+    """
     # TODO should add the logic to actually update character in the DB
     query_expression = f"UPDATE class SET name = {class_definition['name']} WHERE id = {class_id}"
     query_expression.capitalize()

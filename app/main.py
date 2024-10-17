@@ -1,3 +1,4 @@
+"""app.main module"""
 from fastapi import FastAPI
 from app.core.settings import get_settings
 
@@ -8,14 +9,17 @@ from app.api.routes.character_class import router as character_class_router
 
 
 def create_app() -> FastAPI:
+    """
+
+    :return:
+    """
     settings = get_settings()
 
     _app = FastAPI(
         debug=settings.DEBUG,
         title=settings.name,
         version=settings.version,
-        description="A system to create and play a RPG game",
-        openapi_url=f"/openapi.json",
+        description="A system to create and play a RPG game"
     )
 
     _app.include_router(main_router)

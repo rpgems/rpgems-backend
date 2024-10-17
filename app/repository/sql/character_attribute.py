@@ -1,3 +1,4 @@
+"""app.repository.sql.character_attribute module"""
 from typing import List
 
 
@@ -16,6 +17,11 @@ def _adapt_list_response(list_of_attributes: List[dict]) -> List[dict]:
 
 
 def get_character_extended_attributes(character_id: int) -> List[dict]:
+    """
+
+    :param character_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT attribute_id FROM character_attributes WHERE character_id = {character_id}"
     query_expression.capitalize()
@@ -28,6 +34,11 @@ def get_character_extended_attributes(character_id: int) -> List[dict]:
 
 
 def get_attribute_by_id(attribute_id: int) -> dict | None:
+    """
+
+    :param attribute_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM attribute WHERE id = {attribute_id}"
     query_result = query_expression
@@ -44,6 +55,10 @@ def get_attribute_by_id(attribute_id: int) -> dict | None:
 
 
 def list_all_attributes() -> List[dict]:
+    """
+
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM attribute"
     query_expression.capitalize()
@@ -52,6 +67,11 @@ def list_all_attributes() -> List[dict]:
 
 
 def search_attributes_by_name(name_search: str) -> List[dict]:
+    """
+
+    :param name_search:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM attribute WHERE name LIKE '{name_search}%'"
     query_expression.capitalize()
@@ -60,6 +80,11 @@ def search_attributes_by_name(name_search: str) -> List[dict]:
 
 
 def create_attribute(attribute: dict) -> int:
+    """
+
+    :param attribute:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = (f"INSERT INTO attribute (name, description, skill_points) values ('{attribute['name']}', "
                         f"'{attribute['description']}', '{attribute['skill_points']})' RETURNING id")
@@ -72,12 +97,21 @@ def create_attribute(attribute: dict) -> int:
 
 
 def delete_attribute_by_id(attribute_id: int) -> None:
+    """
+
+    :param attribute_id:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"DELETE FROM attribute where id = {attribute_id}"
     query_expression.capitalize()
 
 
 def update_attribute_definition(attribute_id: int, attribute_definition: dict) -> None:
+    """
+
+    :param attribute_id:
+    :param attribute_definition:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = (f"UPDATE attribute set name='{attribute_definition['name']}',"
                         f" description={attribute_definition['description']},"

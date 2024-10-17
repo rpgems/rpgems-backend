@@ -1,3 +1,4 @@
+"""app.api.app_router module"""
 from fastapi import APIRouter, status
 from pydantic import BaseModel
 
@@ -16,4 +17,5 @@ class HealthResponse(BaseModel):
     response_model=HealthResponse,
 )
 async def health():
+    """function responsible for the /health route"""
     return HealthResponse(message="It's running!")

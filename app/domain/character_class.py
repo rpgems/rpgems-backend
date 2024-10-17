@@ -1,3 +1,4 @@
+"""app.domain.character_class module"""
 from typing import List
 from pydantic import BaseModel
 

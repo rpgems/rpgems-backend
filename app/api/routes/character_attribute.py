@@ -1,6 +1,7 @@
+"""app.api.routes.character_attribute module"""
 from typing import List
 
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
 from app.api.adapter.character_attribute import (adapt_get_attribute_by_id, adapt_list_all_attributes,
@@ -22,6 +23,11 @@ router = APIRouter(prefix="/attribute", tags=["character_attribute"])
     response_model=CharacterAttributeResponse,
 )
 async def get_attribute(attribute_id: int) -> CharacterAttributeResponse:
+    """
+
+    :param attribute_id:
+    :return:
+    """
     attribute_response = adapt_get_attribute_by_id(attribute_id)
     return attribute_response
 
@@ -36,6 +42,10 @@ async def get_attribute(attribute_id: int) -> CharacterAttributeResponse:
     response_model=List[CharacterAttributeResponse],
 )
 async def list_attribute() -> List[CharacterAttributeResponse]:
+    """
+
+    :return:
+    """
     attributes = adapt_list_all_attributes()
     return attributes
 
@@ -50,6 +60,11 @@ async def list_attribute() -> List[CharacterAttributeResponse]:
     response_model=List[CharacterAttributeResponse],
 )
 async def list_attributes_by_name(name_search: str) -> List[CharacterAttributeResponse]:
+    """
+
+    :param name_search:
+    :return:
+    """
     attributes = adapt_search_attributes_by_name(name_search)
     return attributes
 
@@ -62,6 +77,11 @@ async def list_attributes_by_name(name_search: str) -> List[CharacterAttributeRe
     }
 )
 async def create_new_attribute(attribute_definition: dict) -> JSONResponse:
+    """
+
+    :param attribute_definition:
+    :return:
+    """
     character_id = adapt_create_attribute(attribute_definition)
     content = {"message": "Attribute created"}
     headers = {"Content-Type": "application/json", "Location": f"/attribute/{character_id}"}
@@ -78,6 +98,11 @@ async def create_new_attribute(attribute_definition: dict) -> JSONResponse:
     }
 )
 async def delete_attribute(attribute_id: int) -> JSONResponse:
+    """
+
+    :param attribute_id:
+    :return:
+    """
     adapt_delete_attribute_by_id(attribute_id)
     content = {"message": "Attribute deleted"}
     headers = {"Content-Type": "application/json"}
@@ -93,6 +118,12 @@ async def delete_attribute(attribute_id: int) -> JSONResponse:
     }
 )
 async def update_attribute(attribute_id: int, attribute_definition: dict) -> JSONResponse:
+    """
+
+    :param attribute_id:
+    :param attribute_definition:
+    :return:
+    """
     result = adapt_update_attribute_definition(attribute_id, attribute_definition)
     response = JSONResponse(content=result['content'], status_code=result['status'], headers=result['headers'])
     return response

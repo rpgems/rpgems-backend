@@ -1,3 +1,4 @@
+"""app.settings module"""
 from os import environ
 
 from functools import lru_cache
@@ -17,4 +18,8 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    """
+
+    :return:
+    """
     return Settings()

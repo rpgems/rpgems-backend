@@ -1,3 +1,4 @@
+"""app.services.character_attribute module"""
 from typing import List
 
 from fastapi import HTTPException
@@ -10,6 +11,11 @@ from app.repository.sql.character_attribute import (get_attribute_by_id, list_al
 
 
 def service_get_attribute_by_id(attribute_id: int) -> Attribute:
+    """
+
+    :param attribute_id:
+    :return:
+    """
     if isinstance(attribute_id, int):
         character_response: dict = get_attribute_by_id(attribute_id)
     else:
@@ -26,6 +32,10 @@ def service_get_attribute_by_id(attribute_id: int) -> Attribute:
 
 
 def service_list_attributes() -> List[Attribute]:
+    """
+
+    :return:
+    """
     attribute_list_data: List[dict] = list_all_attributes()
     if len(attribute_list_data) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No attributes found")
@@ -42,6 +52,11 @@ def service_list_attributes() -> List[Attribute]:
 
 
 def service_search_attributes_by_name(name: str) -> List[Attribute]:
+    """
+
+    :param name:
+    :return:
+    """
     if len(name) == 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Name should be a non-empty string")
     else:
@@ -61,6 +76,11 @@ def service_search_attributes_by_name(name: str) -> List[Attribute]:
 
 
 def service_create_attribute(attribute_data: dict) -> int:
+    """
+
+    :param attribute_data:
+    :return:
+    """
     keys = ["name", "description", "skill_points"]
     if all(key in keys for key in attribute_data.keys()):
         attribute_id: int = create_attribute(attribute_data)
@@ -72,6 +92,10 @@ def service_create_attribute(attribute_data: dict) -> int:
 
 
 def service_delete_attribute_by_id(attribute_id: int) -> None:
+    """
+
+    :param attribute_id:
+    """
     if isinstance(attribute_id, int):
         attribute_data: dict = get_attribute_by_id(attribute_id)
         if attribute_data is None:
@@ -83,6 +107,12 @@ def service_delete_attribute_by_id(attribute_id: int) -> None:
 
 
 def service_update_attribute_definition(attribute_id: int, definition: dict) -> dict:
+    """
+
+    :param attribute_id:
+    :param definition:
+    :return:
+    """
     keys = ["name", "description", "skill_points"]
     if not isinstance(attribute_id, int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Attribute id should be a number")

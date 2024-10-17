@@ -1,3 +1,4 @@
+"""app.api.adapter.character module"""
 from typing import List
 
 from app.api.domain.character import CharacterResponse
@@ -8,6 +9,11 @@ from app.services.character import (service_get_character_by_id, service_list_ch
 
 
 def adapt_get_character_by_id(character_id) -> CharacterResponse:
+    """
+
+    :param character_id:
+    :return:
+    """
     character_response: Character = service_get_character_by_id(character_id)
     character_result = CharacterResponse(id=character_response.id,
                                          name=character_response.name,
@@ -19,6 +25,10 @@ def adapt_get_character_by_id(character_id) -> CharacterResponse:
 
 
 def adapt_list_characters() -> List[CharacterResponse]:
+    """
+
+    :return:
+    """
     character_list_response: List[Character] = service_list_characters()
     character_list_result: List[CharacterResponse] = []
     for character_response in character_list_response:
@@ -33,6 +43,11 @@ def adapt_list_characters() -> List[CharacterResponse]:
 
 
 def adapt_search_characters_by_name(name_search: str) -> List[CharacterResponse]:
+    """
+
+    :param name_search:
+    :return:
+    """
     character_list_response: List[Character] = service_search_characters_by_name(name_search)
     character_list_result: List[CharacterResponse] = []
     for character_response in character_list_response:
@@ -47,14 +62,29 @@ def adapt_search_characters_by_name(name_search: str) -> List[CharacterResponse]
 
 
 def adapt_create_character(character_data: dict) -> int:
+    """
+
+    :param character_data:
+    :return:
+    """
     character_id: int = service_create_character(character_data)
     return character_id
 
 
 def adapt_delete_character_by_id(character_id: int) -> None:
+    """
+
+    :param character_id:
+    """
     service_delete_character_by_id(character_id)
 
 
 def adapt_update_character_definition(character_id: int, character_definition: dict) -> dict:
+    """
+
+    :param character_id:
+    :param character_definition:
+    :return:
+    """
     result = service_update_character_definition(character_id, character_definition)
     return result

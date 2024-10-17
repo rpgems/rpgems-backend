@@ -1,3 +1,4 @@
+"""app.api.domain.character_attribute module"""
 from pydantic import BaseModel
 
 

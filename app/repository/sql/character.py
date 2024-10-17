@@ -1,3 +1,4 @@
+"""app.repository.sql.character module"""
 from typing import List
 
 
@@ -17,6 +18,11 @@ def _adapt_list_response(list_of_characters: List[dict]) -> List[dict]:
 
 
 def get_characters_linked_to_attribute(attribute_id: int) -> List[dict]:
+    """
+
+    :param attribute_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT character_id FROM character_attributes WHERE attribute_id = {attribute_id}"
     query_expression.capitalize()
@@ -30,6 +36,11 @@ def get_characters_linked_to_attribute(attribute_id: int) -> List[dict]:
 
 
 def get_characters_linked_to_class(class_id: int) -> List[dict]:
+    """
+
+    :param class_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM character WHERE class={class_id}"
     query_expression.capitalize()
@@ -38,6 +49,11 @@ def get_characters_linked_to_class(class_id: int) -> List[dict]:
 
 
 def get_character_by_id(character_id: int) -> dict | None:
+    """
+
+    :param character_id:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM character WHERE character_id = {character_id}"
     query_result = query_expression
@@ -56,6 +72,10 @@ def get_character_by_id(character_id: int) -> dict | None:
 
 
 def list_all_characters() -> List[dict]:
+    """
+
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM character"
     query_expression.capitalize()
@@ -64,6 +84,11 @@ def list_all_characters() -> List[dict]:
 
 
 def search_characters_by_name(name_search: str) -> List[dict]:
+    """
+
+    :param name_search:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"SELECT * FROM character WHERE name LIKE '{name_search}%'"
     query_expression.capitalize()
@@ -72,6 +97,11 @@ def search_characters_by_name(name_search: str) -> List[dict]:
 
 
 def create_character(character: dict) -> int:
+    """
+
+    :param character:
+    :return:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = (f"INSERT INTO character (name, class, description, experience_points) VALUES "
                         f"({character['name']}, {character['class']}, {character['description']}, "
@@ -88,12 +118,21 @@ def create_character(character: dict) -> int:
 
 
 def delete_character_by_id(character_id: int) -> None:
+    """
+
+    :param character_id:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = f"DELETE FROM character WHERE id = {character_id}"
     query_expression.capitalize()
 
 
 def update_character_definition(character_id: int, character_definition: dict) -> None:
+    """
+
+    :param character_id:
+    :param character_definition:
+    """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = (f"UPDATE character SET name = {character_definition['name']}, "
                         f"class = {character_definition['class']}, description = {character_definition['description']},"
