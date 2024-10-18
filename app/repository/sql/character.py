@@ -24,7 +24,8 @@ def get_characters_linked_to_attribute(attribute_id: int) -> List[dict]:
     :return:
     """
     # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT character_id FROM character_attributes WHERE attribute_id = {attribute_id}"
+    query_expression = (f"SELECT character_id FROM character_attributes "
+                        f"WHERE attribute_id = {attribute_id}")
     query_expression.capitalize()
     list_of_character_ids = [1, 2, 3]
     result = []
@@ -102,16 +103,18 @@ def create_character(character: dict) -> int:
     :return:
     """
     # TODO Add the function that execute the query_expression on the DB
-    query_expression = (f"INSERT INTO character (name, class, description, experience_points) VALUES "
-                        f"({character['name']}, {character['class']}, {character['description']}, "
-                        f"{character['experience_points']}) RETURNING id")
+    query_expression = (f"INSERT INTO character (name, class, description, experience_points) "
+                        f"VALUES ({character['name']}, {character['class']}, "
+                        f"{character['description']}, {character['experience_points']}) "
+                        f"RETURNING id")
     query_result = query_expression
     if query_result is None:
         result = 0
     else:
         result = query_result[0]
         for attribute_id in character['attributes']:
-            query_expression = f"INSERT INTO attribute (character_id, attribute_id) VALUES ({result}, {attribute_id})"
+            query_expression = (f"INSERT INTO attribute (character_id, attribute_id) "
+                                f"VALUES ({result}, {attribute_id})")
             query_expression.capitalize()
     return result
 
@@ -134,6 +137,8 @@ def update_character_definition(character_id: int, character_definition: dict) -
     """
     # TODO Add the function that execute the query_expression on the DB
     query_expression = (f"UPDATE character SET name = {character_definition['name']}, "
-                        f"class = {character_definition['class']}, description = {character_definition['description']},"
-                        f" experience_points = {character_definition['experience_points']} WHERE id = {character_id}")
+                        f"class = {character_definition['class']}, "
+                        f"description = {character_definition['description']}, "
+                        f"experience_points = {character_definition['experience_points']} "
+                        f"WHERE id = {character_id}")
     query_expression.capitalize()

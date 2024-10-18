@@ -6,7 +6,8 @@ from fastapi.responses import JSONResponse
 
 from app.api.adapter.character_class import (adapt_get_class_by_id, adapt_list_all_classes,
                                              adapt_search_classes_by_name, adapt_create_class,
-                                             adapt_delete_class_by_id, adapt_update_class_definition)
+                                             adapt_delete_class_by_id,
+                                             adapt_update_class_definition)
 from app.api.domain.character_class import CharacterClassResponse
 
 router = APIRouter(prefix="/class", tags=["character_class"])
@@ -124,5 +125,6 @@ async def update_class(class_id: int, class_definition: dict) -> JSONResponse:
     :return:
     """
     result = adapt_update_class_definition(class_id, class_definition)
-    response = JSONResponse(content=result['content'], status_code=result['status'], headers=result['headers'])
+    response = JSONResponse(content=result['content'], status_code=result['status'],
+                            headers=result['headers'])
     return response

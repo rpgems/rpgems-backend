@@ -6,9 +6,9 @@ from fastapi.responses import JSONResponse
 
 from app.api.adapter.character import (adapt_get_character_by_id, adapt_list_characters,
                                        adapt_search_characters_by_name, adapt_create_character,
-                                       adapt_delete_character_by_id, adapt_update_character_definition)
+                                       adapt_delete_character_by_id,
+                                       adapt_update_character_definition)
 from app.api.domain.character import CharacterResponse
-
 
 router = APIRouter(prefix="/character", tags=["character"])
 
@@ -123,5 +123,6 @@ async def update_character(character_id: int, character_definition: dict) -> JSO
     :return:
     """
     result = adapt_update_character_definition(character_id, character_definition)
-    response = JSONResponse(content=result['content'], status_code=result['status'], headers=result['headers'])
+    response = JSONResponse(content=result['content'], status_code=result['status'],
+                            headers=result['headers'])
     return response

@@ -23,7 +23,8 @@ def get_character_extended_attributes(character_id: int) -> List[dict]:
     :return:
     """
     # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT attribute_id FROM character_attributes WHERE character_id = {character_id}"
+    query_expression = (f"SELECT attribute_id FROM character_attributes "
+                        f"WHERE character_id = {character_id}")
     query_expression.capitalize()
     list_of_attribute_ids = [1, 2, 3]  # executed query_expression
     result = []
@@ -86,8 +87,9 @@ def create_attribute(attribute: dict) -> int:
     :return:
     """
     # TODO Add the function that execute the query_expression on the DB
-    query_expression = (f"INSERT INTO attribute (name, description, skill_points) values ('{attribute['name']}', "
-                        f"'{attribute['description']}', '{attribute['skill_points']})' RETURNING id")
+    query_expression = (
+        f"INSERT INTO attribute (name, description, skill_points) values ('{attribute['name']}', "
+        f"'{attribute['description']}', '{attribute['skill_points']})' RETURNING id")
     query_result = query_expression
     if query_result is None:
         result = 0
@@ -115,5 +117,6 @@ def update_attribute_definition(attribute_id: int, attribute_definition: dict) -
     # TODO Add the function that execute the query_expression on the DB
     query_expression = (f"UPDATE attribute set name='{attribute_definition['name']}',"
                         f" description={attribute_definition['description']},"
-                        f" skill_points={attribute_definition['skill_points']} WHERE id={attribute_id}")
+                        f" skill_points={attribute_definition['skill_points']} "
+                        f"WHERE id={attribute_id}")
     query_expression.capitalize()

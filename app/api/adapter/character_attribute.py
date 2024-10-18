@@ -4,8 +4,10 @@ from typing import List
 from app.api.domain.character_attribute import CharacterAttributeResponse
 from app.domain.character_attribute import Attribute
 from app.services.character_attribute import (service_get_attribute_by_id, service_list_attributes,
-                                              service_search_attributes_by_name, service_create_attribute,
-                                              service_delete_attribute_by_id, service_update_attribute_definition)
+                                              service_search_attributes_by_name,
+                                              service_create_attribute,
+                                              service_delete_attribute_by_id,
+                                              service_update_attribute_definition)
 
 
 def adapt_get_attribute_by_id(attribute_id: int) -> CharacterAttributeResponse:
@@ -18,7 +20,7 @@ def adapt_get_attribute_by_id(attribute_id: int) -> CharacterAttributeResponse:
     attribute_result = CharacterAttributeResponse(id=attribute_response.id,
                                                   name=attribute_response.name,
                                                   description=attribute_response.description,
-                                                  skill_points=attribute_response.skill_points,)
+                                                  skill_points=attribute_response.skill_points, )
     return attribute_result
 
 

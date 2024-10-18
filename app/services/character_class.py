@@ -5,7 +5,8 @@ from fastapi import HTTPException
 from starlette import status
 
 from app.domain.character_class import CharacterClass
-from app.repository.sql.character_class import (get_class_by_id, list_all_classes, search_classes_by_name, create_class,
+from app.repository.sql.character_class import (get_class_by_id, list_all_classes,
+                                                search_classes_by_name, create_class,
                                                 delete_class_by_id, update_class_definition)
 
 
@@ -18,7 +19,8 @@ def service_get_class_by_id(class_id: int) -> CharacterClass:
     if isinstance(class_id, int):
         class_response: dict = get_class_by_id(class_id)
     else:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="class_id should be a number")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="class_id should be a number")
     if class_response is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="class not found")
     character_class = CharacterClass()
@@ -53,7 +55,8 @@ def service_search_classes_by_name(name: str) -> List[CharacterClass]:
     :return:
     """
     if len(name) == 0:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Name should be a non-empty string")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Name should be a non-empty string")
     class_list_data: List[dict] = search_classes_by_name(name)
     if len(class_list_data) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No classes found")
@@ -94,7 +97,8 @@ def service_delete_class_by_id(class_id: int) -> None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Class not found")
         delete_class_by_id(class_id)
     else:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Class id should be a number")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Class id should be a number")
 
 
 def service_update_class_definition(class_id: int, definition: dict) -> dict:
@@ -106,9 +110,11 @@ def service_update_class_definition(class_id: int, definition: dict) -> dict:
     """
     keys = ["name", "attributes"]
     if not isinstance(class_id, int):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Class id should be a number")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Class id should be a number")
     if not definition.keys() in keys:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"malformed keys: {definition.keys()}")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f"malformed keys: {definition.keys()}")
     class_data: dict = get_class_by_id(class_id)
     if class_data is None:
         class_id: int = create_class(definition)

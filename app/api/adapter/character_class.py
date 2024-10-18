@@ -5,7 +5,8 @@ from app.api.domain.character_class import CharacterClassResponse
 from app.domain.character_class import CharacterClass
 from app.services.character_class import (service_get_class_by_id, service_list_classes,
                                           service_search_classes_by_name, service_create_class,
-                                          service_delete_class_by_id, service_update_class_definition)
+                                          service_delete_class_by_id,
+                                          service_update_class_definition)
 
 
 def adapt_get_class_by_id(class_id: int) -> CharacterClassResponse:
