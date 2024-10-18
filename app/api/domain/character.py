@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 
 class CharacterResponse(BaseModel):
+    """CharacterResponse Model"""
     id: int
     name: str
     character_class: int

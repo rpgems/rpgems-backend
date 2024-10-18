@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 class Attribute(BaseModel):
+    """Attribute model"""
     id: int
     name: str
     description: str

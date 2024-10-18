@@ -6,6 +6,7 @@ router = APIRouter()
 
 
 class HealthResponse(BaseModel):
+    """Health Response Model"""
     message: str
 
 
