@@ -1,8 +1,10 @@
+"""app.domain.character module"""
 from typing import List, Optional
 from pydantic import BaseModel
 
 
 class Character(BaseModel):
+    """Character model"""
     id: int
     name: str
     character_class: int

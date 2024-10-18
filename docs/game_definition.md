@@ -26,4 +26,4 @@ The system API should be able to execute the following actions:
  - Attach a character to a game definition
  - Remove a character from a game definition
  - List all characters attached to a game definition
- - Search a character attached to a game defintion
+ - Search a character attached to a game definition
