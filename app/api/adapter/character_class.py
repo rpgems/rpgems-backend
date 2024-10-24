@@ -1,6 +1,6 @@
 from typing import List
 
-from app.api.domain.character_class import CharacterClassResponse
+from app.api.schema.character_class import CharacterClassResponse
 from app.domain.character_class import CharacterClass
 from app.services.character_class import (service_get_class_by_id, service_list_classes,
                                               service_search_classes_by_name, service_create_class,
