@@ -1,7 +1,7 @@
 """app.api.adapter.character_attribute module"""
 from typing import List
 
-from app.api.domain.character_attribute import CharacterAttributeResponse
+from app.api.schema.character_attribute import CharacterAttributeResponse
 from app.domain.character_attribute import Attribute
 from app.services.character_attribute import (service_get_attribute_by_id, service_list_attributes,
                                               service_search_attributes_by_name,

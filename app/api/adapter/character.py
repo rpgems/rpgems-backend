@@ -1,7 +1,7 @@
 """app.api.adapter.character module"""
 from typing import List
 
-from app.api.domain.character import CharacterResponse
+from app.api.schema.character import CharacterResponse
 from app.domain.character import Character
 from app.services.character import (service_get_character_by_id, service_list_characters,
                                     service_search_characters_by_name, service_create_character,

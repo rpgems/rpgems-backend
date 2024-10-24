@@ -8,7 +8,7 @@ from app.api.adapter.character_class import (adapt_get_class_by_id, adapt_list_a
                                              adapt_search_classes_by_name, adapt_create_class,
                                              adapt_delete_class_by_id,
                                              adapt_update_class_definition)
-from app.api.domain.character_class import CharacterClassResponse
+from app.api.schema.character_class import CharacterClassResponse
 
 router = APIRouter(prefix="/class", tags=["character_class"])
 
