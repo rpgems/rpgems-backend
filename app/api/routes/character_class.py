@@ -1,3 +1,4 @@
+"""app.api.routes.character_class module"""
 from typing import List
 
 from fastapi import APIRouter, status
@@ -5,7 +6,8 @@ from fastapi.responses import JSONResponse
 
 from app.api.adapter.character_class import (adapt_get_class_by_id, adapt_list_all_classes,
                                              adapt_search_classes_by_name, adapt_create_class,
-                                             adapt_delete_class_by_id, adapt_update_class_definition)
+                                             adapt_delete_class_by_id,
+                                             adapt_update_class_definition)
 from app.api.schema.character_class import CharacterClassResponse
 
 router = APIRouter(prefix="/class", tags=["character_class"])
@@ -21,6 +23,11 @@ router = APIRouter(prefix="/class", tags=["character_class"])
     response_model=CharacterClassResponse,
 )
 async def get_class(class_id: int) -> CharacterClassResponse:
+    """
+
+    :param class_id:
+    :return:
+    """
     class_response = adapt_get_class_by_id(class_id)
     return class_response
 
@@ -35,6 +42,10 @@ async def get_class(class_id: int) -> CharacterClassResponse:
     response_model=List[CharacterClassResponse],
 )
 async def list_classes() -> List[CharacterClassResponse]:
+    """
+
+    :return:
+    """
     classes = adapt_list_all_classes()
     return classes
 
@@ -49,6 +60,11 @@ async def list_classes() -> List[CharacterClassResponse]:
     response_model=List[CharacterClassResponse],
 )
 async def list_classes_by_name(name_search: str) -> List[CharacterClassResponse]:
+    """
+
+    :param name_search:
+    :return:
+    """
     classes = adapt_search_classes_by_name(name_search)
     return classes
 
@@ -61,6 +77,11 @@ async def list_classes_by_name(name_search: str) -> List[CharacterClassResponse]
     }
 )
 async def create_new_class(class_definition: dict) -> JSONResponse:
+    """
+
+    :param class_definition:
+    :return:
+    """
     class_id = adapt_create_class(class_definition)
     content = {"message": "Class created"}
     headers = {"Content-Type": "application/json", "Location": f"/class/{class_id}"}
@@ -77,6 +98,11 @@ async def create_new_class(class_definition: dict) -> JSONResponse:
     }
 )
 async def delete_class(class_id: int) -> JSONResponse:
+    """
+
+    :param class_id:
+    :return:
+    """
     adapt_delete_class_by_id(class_id)
     content = {"message": "Class deleted"}
     headers = {"Content-Type": "application/json"}
@@ -92,6 +118,13 @@ async def delete_class(class_id: int) -> JSONResponse:
     }
 )
 async def update_class(class_id: int, class_definition: dict) -> JSONResponse:
+    """
+
+    :param class_id:
+    :param class_definition:
+    :return:
+    """
     result = adapt_update_class_definition(class_id, class_definition)
-    response = JSONResponse(content=result['content'], status_code=result['status'], headers=result['headers'])
+    response = JSONResponse(content=result['content'], status_code=result['status'],
+                            headers=result['headers'])
     return response
