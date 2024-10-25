@@ -9,6 +9,7 @@ from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import URL
 
+
 # !/usr/bin/env python
 # mypy: ignore-errors
 
@@ -46,6 +47,9 @@ class Settings(BaseSettings):
 
     @property
     def db_dsn(self) -> URL:
+        """
+        Define db dns
+        """
         return URL.create(
             drivername="postgresql+asyncpg",
             username=self.db_user,
@@ -57,14 +61,19 @@ class Settings(BaseSettings):
 
     @property
     def _db_password_escaped_for_alembic(self) -> str:
-        """Return the password escaping the special characters as required for Alembic.
-        Follows recomendation on https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls.
+        """
+        Return the password escaping the special characters as required for Alembic.
+        Follows recommendation on https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls.
         """
         return urllib.parse.quote_plus(self.db_password).replace("%", "%%")
 
     @property
     def db_dsn_sync(self) -> str:
-        return f"postgresql://{self.db_user}:{self._db_password_escaped_for_alembic}@{self.db_host}/{self.db_name}"
+        """
+        Sync db dsn
+        """
+        return (f"postgresql://{self.db_user}:{self._db_password_escaped_for_alembic}@"
+                f"{self.db_host}/{self.db_name}")
 
 
 @lru_cache
