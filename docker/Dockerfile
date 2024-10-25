@@ -1,9 +1,11 @@
 FROM python:3.11-alpine3.20
 
+SHELL ["/bin/ash", "-o", "pipefail"]
+
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true \
     PATH=/rpgems/.venv/bin:$PATH
 
-RUN apk add curl
+RUN apk add curl=8.10.1-r0
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
