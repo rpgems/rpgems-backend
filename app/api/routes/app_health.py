@@ -3,10 +3,10 @@ from fastapi import APIRouter, status
 from app.api.schema.app_health import HealthResponse
 
 
-router = APIRouter()
+router = APIRouter(prefix="/health", tags=["health-check"])
 
 @router.get(
-    path="/health",
+    path="/",
     responses={
         status.HTTP_200_OK: {"description": "Health response OK"}
     },
