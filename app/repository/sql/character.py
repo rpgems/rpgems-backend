@@ -1,5 +1,7 @@
 """app.repository.sql.character module"""
 from typing import List
+from app.repository.sql import generic_get_by_id, generic_list, generic_search_by_name, \
+    generic_create, generic_delete_by_id, generic_update, generic_search
 
 
 def _adapt_list_response(list_of_characters: List[dict]) -> List[dict]:
@@ -23,15 +25,12 @@ def get_characters_linked_to_attribute(attribute_id: int) -> List[dict]:
     :param attribute_id:
     :return:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = (f"SELECT character_id FROM character_attributes "
-                        f"WHERE attribute_id = {attribute_id}")
-    query_expression.capitalize()
-    list_of_character_ids = [1, 2, 3]
+    list_of_character_ids = generic_search("character_attributes", "character_id",
+                                           "attribute_id", attribute_id)
     result = []
     if len(list_of_character_ids) != 0:
         for character_id in list_of_character_ids:
-            character = get_character_by_id(character_id)
+            character = get_character_by_id(character_id["character_id"])
             result.append(character)
     return result
 
@@ -42,10 +41,7 @@ def get_characters_linked_to_class(class_id: int) -> List[dict]:
     :param class_id:
     :return:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT * FROM character WHERE class={class_id}"
-    query_expression.capitalize()
-    list_of_characters = [{}]
+    list_of_characters = generic_search("character", "*", "class", class_id)
     return _adapt_list_response(list_of_characters)
 
 
@@ -55,20 +51,19 @@ def get_character_by_id(character_id: int) -> dict | None:
     :param character_id:
     :return:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT * FROM character WHERE character_id = {character_id}"
-    query_result = query_expression
-    if len(query_result) == 0:
-        return None
-    character = {
-        "id": "query_result['id']",
-        "name": "query_result['name']",
-        "class": "query_result['class']",
-        "description": "query_result['description']",
-        "experience_points": "query_result['experience_points']",
-        "attributes": "query_result['character_attributes']"
-    }
-    return character
+    character = generic_get_by_id("character", character_id)
+    if character is not None:
+        character_response = {
+            "id": character['id'],
+            "name": character['name'],
+            "class": character['class'],
+            "description": character['description'],
+            "experience_points": character['experience_points'],
+            "attributes": character['character_attributes']
+        }
+    else:
+        character_response = None
+    return character_response
 
 
 def list_all_characters() -> List[dict]:
@@ -76,10 +71,7 @@ def list_all_characters() -> List[dict]:
 
     :return:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = "SELECT * FROM character"
-    query_expression.capitalize()
-    list_of_characters = [{}]
+    list_of_characters = generic_list("character")
     return _adapt_list_response(list_of_characters)
 
 
@@ -89,10 +81,7 @@ def search_characters_by_name(name_search: str) -> List[dict]:
     :param name_search:
     :return:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"SELECT * FROM character WHERE name LIKE '{name_search}%'"
-    query_expression.capitalize()
-    list_of_characters = [{}]
+    list_of_characters = generic_search_by_name("character", name_search)
     return _adapt_list_response(list_of_characters)
 
 
@@ -102,20 +91,12 @@ def create_character(character: dict) -> int:
     :param character:
     :return:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = (f"INSERT INTO character (name, class, description, experience_points) "
-                        f"VALUES ({character['name']}, {character['class']}, "
-                        f"{character['description']}, {character['experience_points']}) "
-                        f"RETURNING id")
-    query_result = query_expression
-    if query_result is None:
-        result = 0
-    else:
-        result = query_result[0]
-        for attribute_id in character['attributes']:
-            query_expression = (f"INSERT INTO attribute (character_id, attribute_id) "
-                                f"VALUES ({result}, {attribute_id})")
-            query_expression.capitalize()
+    character_attributes = character['attributes']
+    result = generic_create("character", character.pop('attributes'))
+    if result != 0:
+        for attribute_id in character_attributes:
+            generic_create("character_attributes",
+                           {"character_id": result, "attribute_id": attribute_id})
     return result
 
 
@@ -124,9 +105,7 @@ def delete_character_by_id(character_id: int) -> None:
 
     :param character_id:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = f"DELETE FROM character WHERE id = {character_id}"
-    query_expression.capitalize()
+    generic_delete_by_id("character", character_id)
 
 
 def update_character_definition(character_id: int, character_definition: dict) -> None:
@@ -135,10 +114,4 @@ def update_character_definition(character_id: int, character_definition: dict) -
     :param character_id:
     :param character_definition:
     """
-    # TODO Add the function that execute the query_expression on the DB
-    query_expression = (f"UPDATE character SET name = {character_definition['name']}, "
-                        f"class = {character_definition['class']}, "
-                        f"description = {character_definition['description']}, "
-                        f"experience_points = {character_definition['experience_points']} "
-                        f"WHERE id = {character_id}")
-    query_expression.capitalize()
+    generic_update("character", character_id, character_definition)

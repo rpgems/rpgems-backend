@@ -123,7 +123,7 @@ def service_update_attribute_definition(attribute_id: int, definition: dict) -> 
     if attribute_data is None:
         attribute_id: int = create_attribute(definition)
         result = {
-            "content": {"message": "Character created"},
+            "content": {"message": "Attribute created"},
             "status": status.HTTP_201_CREATED,
             "headers": {"Content-Type": "application/json",
                         "Location": f"/character/{attribute_id}"}
@@ -133,7 +133,7 @@ def service_update_attribute_definition(attribute_id: int, definition: dict) -> 
             attribute_data[key] = value
         update_attribute_definition(attribute_id, attribute_data)
         result = {
-            "content": {"message": "Character updated"},
+            "content": {"message": "Attribute updated"},
             "status": status.HTTP_200_OK,
             "headers": {"Content-Type": "application/json"}
         }
