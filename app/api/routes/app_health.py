@@ -1,14 +1,9 @@
 """app.api.app_router module"""
 from fastapi import APIRouter, status
-from pydantic import BaseModel
+from app.api.schema.app_health import HealthResponse
+
 
 router = APIRouter()
-
-
-class HealthResponse(BaseModel):
-    """Health Response Model"""
-    message: str
-
 
 @router.get(
     path="/health",
