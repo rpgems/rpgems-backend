@@ -1,14 +1,14 @@
-from typing import List, Optional
+""""app.api.routes.character module"""
+from typing import List
 
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
 
 from app.api.adapter.character import (adapt_get_character_by_id, adapt_list_characters,
                                        adapt_search_characters_by_name, adapt_create_character,
-                                       adapt_delete_character_by_id, adapt_update_character_definition)
+                                       adapt_delete_character_by_id,
+                                       adapt_update_character_definition)
 from app.api.schema.character import CharacterResponse
-
 
 router = APIRouter(prefix="/character", tags=["character"])
 
@@ -23,6 +23,11 @@ router = APIRouter(prefix="/character", tags=["character"])
     response_model=CharacterResponse,
 )
 async def get_character_by_id(character_id: int) -> CharacterResponse:
+    """
+
+    :param character_id:
+    :return:
+    """
     character_response = adapt_get_character_by_id(character_id)
     return character_response
 
@@ -36,6 +41,10 @@ async def get_character_by_id(character_id: int) -> CharacterResponse:
     response_model=List[CharacterResponse],
 )
 async def list_characters() -> List[CharacterResponse]:
+    """
+
+    :return:
+    """
     characters = adapt_list_characters()
     return characters
 
@@ -50,6 +59,11 @@ async def list_characters() -> List[CharacterResponse]:
     response_model=List[CharacterResponse],
 )
 async def list_characters_by_name(name_search: str) -> List[CharacterResponse]:
+    """
+
+    :param name_search:
+    :return:
+    """
     characters = adapt_search_characters_by_name(name_search)
     return characters
 
@@ -62,6 +76,11 @@ async def list_characters_by_name(name_search: str) -> List[CharacterResponse]:
     }
 )
 async def create_new_character(character_definition: dict) -> JSONResponse:
+    """
+
+    :param character_definition:
+    :return:
+    """
     character_id = adapt_create_character(character_definition)
     content = {"message": "Character created"}
     headers = {"Content-Type": "application/json", "Location": f"/character/{character_id}"}
@@ -77,6 +96,11 @@ async def create_new_character(character_definition: dict) -> JSONResponse:
     }
 )
 async def delete_character(character_id: int) -> JSONResponse:
+    """
+
+    :param character_id:
+    :return:
+    """
     adapt_delete_character_by_id(character_id)
     content = {"message": "Character deleted"}
     headers = {"Content-Type": "application/json"}
@@ -92,6 +116,13 @@ async def delete_character(character_id: int) -> JSONResponse:
     }
 )
 async def update_character(character_id: int, character_definition: dict) -> JSONResponse:
+    """
+
+    :param character_id:
+    :param character_definition:
+    :return:
+    """
     result = adapt_update_character_definition(character_id, character_definition)
-    response = JSONResponse(content=result['content'], status_code=result['status'], headers=result['headers'])
+    response = JSONResponse(content=result['content'], status_code=result['status'],
+                            headers=result['headers'])
     return response

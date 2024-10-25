@@ -1,4 +1,7 @@
+"""app.settings module"""
+
 import urllib.parse
+
 from os import environ
 
 from functools import lru_cache
@@ -11,9 +14,11 @@ from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
+    """Settings class"""
+
     # Application
     name: str = "RPMGems"
-    version: str = f"0.1"
+    version: str = "0.1"
     DEBUG: bool = True
 
     # Database configuration
@@ -64,4 +69,8 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    """
+
+    :return:
+    """
     return Settings()
