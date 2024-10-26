@@ -19,6 +19,7 @@ def create_app() -> FastAPI:
         debug=settings.DEBUG,
         title=settings.name,
         version=settings.version,
+        root_path=settings.root_path,
         description="A system to create and play a RPG game"
     )
 
