@@ -15,9 +15,9 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
-    env_file:
-      - path: "./.env"
-        required: true
+    env_file: .env
+      # - path: "../.env"
+      #  required: true
     ports:
       - "80:80"
     networks:
@@ -26,16 +26,41 @@ services:
 
   database:
     image: postgres:16.4-alpine3.20
+    container_name: rpgems-db
     restart: always
     shm_size: 128mb
     environment:
-      POSTGRES_PASSWORD: rpgems
+      POSTGRES_USER: ${APP_DB_USER}
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
+      POSTGRES_DB: ${APP_DB_NAME}
+    ports:
+      - "${APP_DB_PORT}:5432"
+    volumes:
+      - rpgems-postgres-data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
     networks:
       - database-backend-connection
+    command: >
+      -p 5432
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "--username=${APP_DB_USER}",
+          "--host=localhost",
+          "--port=5432",
+          "--dbname=${APP_DB_NAME}"
+        ]
+      interval: 1s
+      retries: 3
+
+volumes:
+  rpgems-postgres-data:
 
 networks:
   frontend-connection:
     driver: bridge
   database-backend-connection:
     driver: bridge
-    internal: true
+
