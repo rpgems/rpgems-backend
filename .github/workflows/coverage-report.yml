@@ -1,0 +1,34 @@
+name: Coverage report upload
+
+on: [push]
+
+permissions: read-all
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'poetry'
+      - name: Install Poetry Dependencies
+        run: poetry install
+      - name: Generating code coverage report
+        run: |
+          poetry run coverage run -m pytest tests
+          poetry run coverage xml
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
+          language: python

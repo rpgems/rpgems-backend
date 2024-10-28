@@ -1,0 +1,3 @@
+"""
+tests.app.api.adapter
+"""
