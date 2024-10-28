@@ -15,7 +15,8 @@ def generic_get_by_id(table_name: str, entity_id: int) -> dict | None:
     if len(query_result) == 0:
         entity = None
     else:
-        entity = {"result": query_result}
+        # TODO return None until sql is set
+        entity = None
     return entity
 
 

@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     # Application
     name: str = "RPMGems"
     version: str = "0.1"
+    root_path: str = "/api/v1"
     DEBUG: bool = True
 
     # Database configuration

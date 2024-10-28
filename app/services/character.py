@@ -86,7 +86,7 @@ def service_create_character(character_data: dict) -> int:
     :return:
     """
     keys = ["name", "character_class", "description", "experience_points", "character_attributes"]
-    if all(key in keys for key in character_data.keys()):
+    if all(key in character_data.keys() for key in keys):
         character_id: int = create_character(character_data)
     else:
         missing_fields = list(set(keys) - set(character_data.keys()))
