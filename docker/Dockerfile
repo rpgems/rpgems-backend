@@ -1,7 +1,5 @@
 FROM python:3.11-alpine3.20
 
-SHELL ["/bin/ash", "-o", "pipefail"]
-
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true \
     PATH=/rpgems/.venv/bin:$PATH
 
