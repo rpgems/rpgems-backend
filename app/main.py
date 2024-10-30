@@ -23,12 +23,11 @@ def create_app() -> FastAPI:
         description="A system to create and play a RPG game"
     )
 
-    _app.include_router(app_health_router)
-    _app.include_router(character_router)
-    _app.include_router(character_attribute_router)
-    _app.include_router(character_class_router)
-
     return _app
 
 
 app = create_app()
+app.include_router(app_health_router)
+app.include_router(character_router)
+app.include_router(character_attribute_router)
+app.include_router(character_class_router)
