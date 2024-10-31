@@ -5,7 +5,9 @@ ENV POETRY_VIRTUALENVS_IN_PROJECT=true \
 
 RUN apk add curl=8.10.1-r0
 
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org > ./install-poetry.py && \
+    python3 ./install-poetry.py && \
+    rm ./install-poetry.py
 
 WORKDIR /rpgems
 
