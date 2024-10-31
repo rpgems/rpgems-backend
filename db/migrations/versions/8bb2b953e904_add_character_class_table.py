@@ -47,7 +47,6 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.execute("DROP TRIGGER IF EXISTS update_character_class_updated ON character_class;")
+    op.execute("DROP TRIGGER IF EXISTS update_character_class_updated_at ON character_class;")
     op.execute("DROP TABLE character_class;")
     op.execute("DROP INDEX IF EXISTS idx_character_class_uuid;")
-
