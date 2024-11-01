@@ -1,3 +1,6 @@
+"""
+app.adapters.repositories.database module
+"""
 import logging
 from abc import ABC, abstractmethod
 
@@ -10,12 +13,23 @@ from app.adapters.repositories.exceptions import DatabaseError
 
 
 class DatabaseRepository(ABC):
+    """
+    DatabaseRepository interface
+    """
     @abstractmethod
     async def read(self, stmt: TextClause):
+        """
+
+        :param stmt:
+        """
         raise not_implemented_error(method_name=f"{self.__class__.__name__}.read")
 
     @abstractmethod
     async def write(self, stmt: TextClause):
+        """
+
+        :param stmt:
+        """
         raise not_implemented_error(method_name=f"{self.__class__.__name__}.write")
 
 
