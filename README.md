@@ -1,6 +1,7 @@
 # RPGems
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ced39e83468e4b37bacbcd45fc66a630)](https://app.codacy.com/gh/rpgems/rpgems-backend/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/ced39e83468e4b37bacbcd45fc66a630)](https://app.codacy.com/gh/rpgems/rpgems-backend/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 A system to create and play an RPG game
 
