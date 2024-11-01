@@ -34,6 +34,9 @@ class DatabaseRepository(ABC):
 
 
 class DatabaseRepositoryImpl(DatabaseRepository):
+    """
+    DatabaseRepository implementation
+    """
     def __init__(self, db: AsyncEngine):
         self._db = db
 

@@ -2,11 +2,11 @@
 app.adapters.repositories.base_repository module
 """
 from abc import ABC, abstractmethod
+from pydantic import BaseModel
 from typing import TypeVar, Generic
 
 from app.core.common import not_implemented_error
 
-from pydantic import BaseModel
 
 T = TypeVar("T", bound=BaseModel)
 
