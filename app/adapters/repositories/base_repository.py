@@ -2,8 +2,9 @@
 app.adapters.repositories.base_repository module
 """
 from abc import ABC, abstractmethod
-from pydantic import BaseModel
 from typing import TypeVar, Generic
+
+from pydantic import BaseModel
 
 from app.core.common import not_implemented_error
 
