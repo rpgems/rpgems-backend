@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic
 
-from app.core.common import not_implemented_error
-
 from pydantic import BaseModel
+
+from app.core.common import not_implemented_error
 
 T = TypeVar("T", bound=BaseModel)
 

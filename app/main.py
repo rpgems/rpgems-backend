@@ -1,4 +1,5 @@
 """app.main module"""
+
 from fastapi import FastAPI
 from app.core.settings import get_settings
 
@@ -20,7 +21,7 @@ def create_app() -> FastAPI:
         title=settings.name,
         version=settings.version,
         root_path=settings.root_path,
-        description="A system to create and play a RPG game"
+        description="A system to create and play a RPG game",
     )
 
     return _app
