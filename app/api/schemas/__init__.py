@@ -1,0 +1,3 @@
+"""
+app.api.schemas module
+"""

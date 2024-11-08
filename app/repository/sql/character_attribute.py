@@ -1,7 +1,15 @@
 """app.repository.sql.character_attribute module"""
+
 from typing import List
-from app.repository.sql import generic_get_by_id, generic_list, generic_search_by_name, \
-    generic_create, generic_delete_by_id, generic_update, generic_search
+from app.repository.sql import (
+    generic_get_by_id,
+    generic_list,
+    generic_search_by_name,
+    generic_create,
+    generic_delete_by_id,
+    generic_update,
+    generic_search,
+)
 
 
 def _adapt_list_response(list_of_attributes: List[dict]) -> List[dict]:
@@ -12,7 +20,7 @@ def _adapt_list_response(list_of_attributes: List[dict]) -> List[dict]:
                 "id": attribute,
                 "name": "attribute['name']",
                 "description": "attribute['description']",
-                "skill_points": "attribute['skill_points']"
+                "skill_points": "attribute['skill_points']",
             }
             result.append(attribute_result)
     return result
@@ -24,8 +32,9 @@ def get_character_extended_attributes(character_id: int) -> List[dict]:
     :param character_id:
     :return:
     """
-    list_of_attribute_ids = generic_search("character_attributes", "attribute_id", "character_id",
-                                           character_id)
+    list_of_attribute_ids = generic_search(
+        "character_attributes", "attribute_id", "character_id", character_id
+    )
     result = []
     for attribute_id in list_of_attribute_ids:
         attribute = get_attribute_by_id(attribute_id["attribute_id"])
@@ -42,10 +51,10 @@ def get_attribute_by_id(attribute_id: int) -> dict | None:
     attribute = generic_get_by_id("attribute", attribute_id)
     if attribute is not None:
         attribute_response = {
-            "id": attribute['id'],
-            "name": attribute['name'],
-            "description": attribute['description'],
-            "skill_points": attribute['skill_points']
+            "id": attribute["id"],
+            "name": attribute["name"],
+            "description": attribute["description"],
+            "skill_points": attribute["skill_points"],
         }
     else:
         attribute_response = None

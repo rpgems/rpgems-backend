@@ -1,3 +1,0 @@
-"""
-app.adapters.repositories module
-"""

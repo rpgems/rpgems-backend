@@ -1,4 +1,5 @@
 """app.repository.sql module"""
+
 import json
 from typing import List
 
@@ -43,9 +44,10 @@ def generic_search_by_name(table_name: str, entity_name: str) -> List[dict]:
     return entity_list
 
 
-def generic_search(table_name: str, column_result: str, column_search: str, column_value: any) -> (
-        List)[dict]:
-    """"
+def generic_search(
+    table_name: str, column_result: str, column_search: str, column_value: any
+) -> (List)[dict]:
+    """ "
 
     :param table_name:
     :param column_result:
@@ -53,8 +55,10 @@ def generic_search(table_name: str, column_result: str, column_search: str, colu
     :param column_value:
     :return:
     """
-    query_expression = (f"SELECT {column_result} FROM {table_name} WHERE {column_search} ="
-                        f" {column_value}")
+    query_expression = (
+        f"SELECT {column_result} FROM {table_name} WHERE {column_search} ="
+        f" {column_value}"
+    )
     result = [{"result": query_expression}]
     return result
 
@@ -66,7 +70,9 @@ def generic_create(table_name: str, entity: dict) -> int:
     :param entity:
     :return:
     """
-    query_expression = f"INSERT INTO {table_name} VALUES {json.dumps(entity)} RETURNING id"
+    query_expression = (
+        f"INSERT INTO {table_name} VALUES {json.dumps(entity)} RETURNING id"
+    )
     query_result = query_expression
     if query_result is None:
         result = 0
@@ -94,5 +100,7 @@ def generic_update(table_name: str, entity_id: int, entity: dict) -> None:
     :param entity:
     :return:
     """
-    query_expression = f"UPDATE {table_name} SET {json.dumps(entity)} WHERE id = {entity_id}"
+    query_expression = (
+        f"UPDATE {table_name} SET {json.dumps(entity)} WHERE id = {entity_id}"
+    )
     query_expression.capitalize()
