@@ -73,8 +73,10 @@ class Settings(BaseSettings):
         """
         Sync db dsn
         """
-        return (f"postgresql://{self.db_user}:{self._db_password_escaped_for_alembic}@"
-                f"{self.db_host}/{self.db_name}")
+        return (
+            f"postgresql://{self.db_user}:{self._db_password_escaped_for_alembic}@"
+            f"{self.db_host}/{self.db_name}"
+        )
 
 
 @lru_cache

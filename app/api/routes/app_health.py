@@ -1,15 +1,15 @@
 """app.api.app_router module"""
+
 from fastapi import APIRouter, status
-from app.api.schema.app_health import HealthResponse
+from app.api.schemas.app_health import HealthResponse
 
 
 router = APIRouter(prefix="/health", tags=["health-check"])
 
+
 @router.get(
     path="/",
-    responses={
-        status.HTTP_200_OK: {"description": "Health response OK"}
-    },
+    responses={status.HTTP_200_OK: {"description": "Health response OK"}},
     response_model=HealthResponse,
 )
 async def health():
