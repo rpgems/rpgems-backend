@@ -33,7 +33,7 @@ async def test__create_new_character_class_works():
     expected_sql_statement =""" INSERT INTO character_class (
                     name
                 ) VALUES (
-                    :name,
+                    :name
                 )
                 RETURNING *
                 """

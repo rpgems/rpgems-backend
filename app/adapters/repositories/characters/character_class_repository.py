@@ -1,3 +1,6 @@
+"""
+app.adapters.repositories.characters.character_class_repository module
+"""
 from abc import ABC, abstractmethod
 
 from sqlalchemy import text
@@ -11,14 +14,18 @@ from app.domain.character_class import CharacterClass
 
 
 class CharacterClassRepository(BaseRepository, ABC):
-
+    """
+    Character class repository interface
+    """
     @abstractmethod
     async def save(self, character_class: CharacterClassCreate) -> CharacterClass:
+        """
+        :param character_class:
+        """
         raise not_implemented_error(method_name=f"{self.__class__.__name__}.save")
 
 
 class CharacterClassRepositoryImpl(CharacterClassRepository):
-
     def __init__(self, database: DatabaseRepository):
         self._database = database
 
@@ -28,7 +35,7 @@ class CharacterClassRepositoryImpl(CharacterClassRepository):
                     INSERT INTO character_class (
                     name
                 ) VALUES (
-                    :name,
+                    :name
                 )
                 RETURNING *
                 """
@@ -44,7 +51,13 @@ class CharacterClassRepositoryImpl(CharacterClassRepository):
         return CharacterClass.model_validate(row._mapping)
 
     async def get_by_id(self, _id: int) -> T:
+        """
+        :param _id:
+        """
         pass
 
     async def get_by_uuid(self, _id: int) -> T:
+        """
+        :param _id:
+        """
         pass
