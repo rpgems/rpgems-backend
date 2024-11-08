@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 from sqlalchemy import text
 
-from app.adapters.repositories.base_repository import BaseRepository, T
+from app.repository.sql.base_repository import BaseRepository, T
 from app.repository.schemas.character_class import CharacterClassCreate
 from app.adapters.repositories.database import DatabaseRepository
 from app.repository.sql.exceptions import DatabaseError
