@@ -7,7 +7,7 @@ from sqlalchemy import text
 
 from app.repository.sql.base_repository import BaseRepository, T
 from app.repository.schemas.character_class import CharacterClassCreate
-from app.adapters.repositories.database import DatabaseRepository
+from app.repository.sql.database import DatabaseRepository
 from app.repository.sql.exceptions import DatabaseError
 from app.core.common import not_implemented_error
 from app.domain.character_class import CharacterClass
