@@ -26,6 +26,9 @@ class CharacterClassRepository(BaseRepository, ABC):
 
 
 class CharacterClassRepositoryImpl(CharacterClassRepository):
+    """
+    character class repository implementation
+    """
     def __init__(self, database: DatabaseRepository):
         self._database = database
 
