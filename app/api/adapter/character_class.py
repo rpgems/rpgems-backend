@@ -2,7 +2,7 @@
 
 from typing import List
 
-from app.repository.schemas.schemas import CharacterClassCreate
+from app.repository.schemas.character_class import CharacterClassCreate
 from app.api.schemas.character_class import (
     CharacterClassResponse,
     CharacterClassRequest,

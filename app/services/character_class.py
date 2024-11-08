@@ -9,7 +9,7 @@ from starlette import status
 from app.repository.sql.character_class_repository import (
     CharacterClassRepository,
 )
-from app.repository.schemas.schemas import CharacterClassCreate
+from app.repository.schemas.character_class import CharacterClassCreate
 from app.core.common import not_implemented_error
 from app.domain.character_class import CharacterClass
 from app.repository.sql.character_class import (
