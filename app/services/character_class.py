@@ -6,7 +6,7 @@ from typing import List
 from fastapi import HTTPException
 from starlette import status
 
-from app.adapters.repositories.characters.character_class_repository import (
+from app.repository.sql.character_class_repository import (
     CharacterClassRepository,
 )
 from app.adapters.repositories.characters.schemas import CharacterClassCreate
