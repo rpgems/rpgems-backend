@@ -9,7 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.core.common import not_implemented_error
-from app.adapters.repositories.exceptions import DatabaseError
+from app.repository.sql.exceptions import DatabaseError
 
 
 class DatabaseRepository(ABC):

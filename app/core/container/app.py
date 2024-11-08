@@ -4,10 +4,10 @@ import httpx
 from dependency_injector import containers, providers
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from app.adapters.repositories.characters.character_class_repository import (
+from app.repository.sql.character_class_repository import (
     CharacterClassRepositoryImpl,
 )
-from app.adapters.repositories.database import DatabaseRepositoryImpl
+from app.repository.sql.database import DatabaseRepositoryImpl
 from app.core.settings import get_settings
 from app.services.character_class import CreateCharacterClassServiceImpl
 
