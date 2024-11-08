@@ -1,3 +1,6 @@
+"""
+app.adapters.repositories.schemas module
+"""
 from pydantic import BaseModel, Field
 
 
