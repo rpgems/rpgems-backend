@@ -100,7 +100,7 @@ class CharacterClassRepositoryImpl(CharacterClassRepository):
         if result.rowcount > 0:
             row = result.mappings().fetchone()
         else:
-            raise NotFound("Not entity found")
+            raise NotFound("No entity found")
 
         return CharacterClass.model_validate(row)
 

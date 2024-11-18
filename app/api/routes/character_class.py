@@ -15,7 +15,7 @@ from app.api.schemas.character_class import (
     CharacterClassRequest,
 )
 from app.core.container.app import AppContainer
-from app.repository.sql.exceptions import DatabaseError
+from app.repository.sql.exceptions import DatabaseError, NotFound
 from app.services.character_class import CharacterClassService
 
 router = APIRouter(prefix="/class", tags=["character_class"])
@@ -59,7 +59,7 @@ async def list_classes_by_name(name_search: str,
 async def get_class(class_uuid: str,
                     character_class_service: CharacterClassService = Depends(
                         Provide[AppContainer.character_class_service]),
-                    ) -> CharacterClassResponse:
+                    ) -> JSONResponse:
     """
     Get a character class.
 
@@ -67,8 +67,15 @@ async def get_class(class_uuid: str,
     :param character_class_service:
     :return:
     """
-    character_class = await character_class_service.get_by_uuid(character_class_uuid=class_uuid)
-    return CharacterClassResponse(uuid=str(character_class.uuid), name=character_class.name)
+    try:
+        character_class = await character_class_service.get_by_uuid(character_class_uuid=class_uuid)
+        content = CharacterClassResponse(uuid=str(character_class.uuid),
+                                         name=character_class.name).to_dict()
+        status_code = status.HTTP_200_OK
+    except NotFound as e:
+        status_code = status.HTTP_404_NOT_FOUND
+        content = {"message": str(e)}
+    return JSONResponse(status_code=status_code, content=content)
 
 
 @router.get(
