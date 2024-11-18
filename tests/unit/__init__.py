@@ -10,17 +10,25 @@ class AsyncMock(MagicMock):
 
 
 class DatabaseResult:
+    """
+    Database result mock class.
+    """
     def __init__(self, stored_data: Dict):
         self._mapping = stored_data
-        self._rows = len(self._mapping.keys())
+        self.rowcount = len(self._mapping.keys())
 
     def fetchone(self):
+        """
+        fetches the first row of the result
+        :return:
+        """
         return self._mapping
 
-    def rowcount(self):
-        return self._rows
-
     def mappings(self):
+        """
+        returns a dict representation of the object
+        :return:
+        """
         return self
 
 

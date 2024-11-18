@@ -41,7 +41,7 @@ async def list_classes_by_name(name_search: str,
     :return:
     """
     character_classes = await character_class_service.list_character_classes_by_name(name_search)
-    return [CharacterClassResponse(uuid=character_class.uuid, name=character_class.name) for
+    return [CharacterClassResponse(uuid=str(character_class.uuid), name=character_class.name) for
             character_class in character_classes]
 
 
@@ -67,7 +67,7 @@ async def get_class(class_uuid: str,
     :return:
     """
     character_class = await character_class_service.get_by_uuid(character_class_uuid=class_uuid)
-    return CharacterClassResponse(uuid=character_class.uuid, name=character_class.name)
+    return CharacterClassResponse(uuid=str(character_class.uuid), name=character_class.name)
 
 
 @router.get(
@@ -91,7 +91,7 @@ async def list_classes(character_class_service: CharacterClassService = Depends(
     """
 
     character_classes = await character_class_service.list_character_classes()
-    return [CharacterClassResponse(uuid=character_class.uuid, name=character_class.name) for
+    return [CharacterClassResponse(uuid=str(character_class.uuid), name=character_class.name) for
             character_class in character_classes]
 
 
@@ -100,8 +100,7 @@ async def list_classes(character_class_service: CharacterClassService = Depends(
     responses={
         status.HTTP_201_CREATED: {"description": "Class created"},
         status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
-    },
-    status_code=status.HTTP_201_CREATED,
+    }
 )
 @inject
 async def create_new_class(
@@ -109,7 +108,7 @@ async def create_new_class(
         character_class_service: CharacterClassService = Depends(
             Provide[AppContainer.character_class_service]
         ),
-) -> CharacterClassResponse:
+) -> JSONResponse:
     """
     Creates a new Character Class.
 
@@ -120,10 +119,18 @@ async def create_new_class(
 
     character_class = adapt_create_class_params(character_class_request)
 
-    character_class = await character_class_service.create(
-        character_class=character_class
-    )
-    return CharacterClassResponse(uuid=character_class.uuid, name=character_class.name)
+    try:
+        character_class = await character_class_service.create(
+            character_class=character_class
+        )
+        content = CharacterClassResponse(uuid=str(character_class.uuid),
+                                         name=character_class.name).to_dict()
+        status_code = status.HTTP_201_CREATED
+    except Exception as e:
+        status_code = status.HTTP_400_BAD_REQUEST
+        content = {"message": str(e)}
+
+    return JSONResponse(status_code=status_code,content=content)
 
 
 @router.delete(
