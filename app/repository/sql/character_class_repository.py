@@ -45,9 +45,9 @@ class CharacterClassRepository(BaseRepository, ABC):
         raise not_implemented_error(method_name=f"{self.__class__.__name__}.list_by_param")
 
     @abstractmethod
-    async def update_params(self, character_class_uuid: str, param_changes: dict) -> bool:
+    async def update_params(self, uuid: str, param_changes: dict) -> bool:
         """
-        :param character_class_uuid:
+        :param uuid:
         :param param_changes:
         :return:
         """
@@ -134,9 +134,9 @@ class CharacterClassRepositoryImpl(CharacterClassRepository):
             character_classes.append(CharacterClass.model_validate(row))
         return character_classes
 
-    async def update_params(self, character_class_uuid: str, param_changes: dict) -> bool:
+    async def update_params(self, uuid: str, param_changes: dict) -> bool:
         """
-        :param character_class_uuid:
+        :param uuid:
         :param param_changes:
         :return:
         """
@@ -151,7 +151,7 @@ class CharacterClassRepositoryImpl(CharacterClassRepository):
                     """
                 ).bindparams(
                     name=value,
-                    uuid=character_class_uuid
+                    uuid=uuid
                 )
                 try:
                     await self._database.write(stmt=stmt)
@@ -165,7 +165,7 @@ class CharacterClassRepositoryImpl(CharacterClassRepository):
                     """
                 ).bindparams(
                     is_deleted=value,
-                    uuid=character_class_uuid
+                    uuid=uuid
                 )
                 try:
                     await self._database.write(stmt=stmt)

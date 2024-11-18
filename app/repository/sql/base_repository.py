@@ -17,14 +17,6 @@ class BaseRepository(ABC, Generic[T]):
     Base class for all repositories
     """
     @abstractmethod
-    async def save(self, base_model: T) -> T:
-        """
-
-        :param base_model: The base model to save
-        """
-        raise not_implemented_error(method_name=f"{self.__class__.__name__}.save")
-
-    @abstractmethod
     async def get_by_param(self, parameter_name: str, parameter_value: any) -> T:
         """
 
