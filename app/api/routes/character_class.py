@@ -15,6 +15,7 @@ from app.api.schemas.character_class import (
     CharacterClassRequest,
 )
 from app.core.container.app import AppContainer
+from app.repository.sql.exceptions import DatabaseError
 from app.services.character_class import CharacterClassService
 
 router = APIRouter(prefix="/class", tags=["character_class"])
@@ -126,7 +127,7 @@ async def create_new_class(
         content = CharacterClassResponse(uuid=str(character_class.uuid),
                                          name=character_class.name).to_dict()
         status_code = status.HTTP_201_CREATED
-    except Exception as e:
+    except DatabaseError as e:
         status_code = status.HTTP_400_BAD_REQUEST
         content = {"message": str(e)}
 
