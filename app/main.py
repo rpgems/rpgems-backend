@@ -1,6 +1,7 @@
 """app.main module"""
 
 from fastapi import FastAPI
+from app.core.container.app import AppContainer
 from app.core.settings import get_settings
 
 from app.api.routes.app_health import router as app_health_router
@@ -14,6 +15,7 @@ def create_app() -> FastAPI:
 
     :return:
     """
+    container = AppContainer()
     settings = get_settings()
 
     _app = FastAPI(
@@ -23,6 +25,7 @@ def create_app() -> FastAPI:
         root_path=settings.root_path,
         description="A system to create and play a RPG game",
     )
+    _app.container = container
 
     return _app
 
