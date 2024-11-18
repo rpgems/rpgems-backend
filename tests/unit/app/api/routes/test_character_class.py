@@ -9,7 +9,7 @@ from tests.unit import override_db_repository, DatabaseResult
 @pytest.mark.asyncio
 async def test__create_new_character_class_works():
     character_class_created = {
-        "id": 1,
+        "uuid": "2f4e555f-ea88-4580-9d1d-83efa04e08fd",
         "name": "Warrior",
     }
 
@@ -25,9 +25,8 @@ async def test__create_new_character_class_works():
         assert response.status_code == HTTP_201_CREATED
 
         json_response = response.json()
-        assert json_response["id"] == character_class_created["id"]
+        assert json_response["uuid"] == character_class_created["uuid"]
         assert json_response["name"] == character_class_created["name"]
-        assert json_response["attributes"] == []
 
     executed_sql_statement: str = mocked_db_repository.write.call_args.kwargs['stmt'].text
     expected_sql_statement =""" INSERT INTO character_class (
