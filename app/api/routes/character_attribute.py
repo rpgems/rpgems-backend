@@ -141,9 +141,8 @@ async def update_attribute(
     :return:
     """
     result = adapt_update_attribute_definition(attribute_id, attribute_definition)
-    response = JSONResponse(
+    return JSONResponse(
         content=result["content"],
         status_code=result["status"],
         headers=result["headers"],
     )
-    return response

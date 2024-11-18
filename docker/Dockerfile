@@ -3,7 +3,7 @@ FROM python:3.11-alpine3.20
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true \
     PATH=/rpgems/.venv/bin:$PATH
 
-RUN apk add curl=8.10.1-r0
+RUN apk add curl=8.11.0-r2
 
 RUN curl -sSL https://install.python-poetry.org > ./install-poetry.py && \
     python3 ./install-poetry.py && \
