@@ -1,6 +1,7 @@
 """app.api.domain.character_class module"""
 
 from typing import List
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -12,6 +13,6 @@ class CharacterClassRequest(BaseModel):
 class CharacterClassResponse(BaseModel):
     """CharacterClassResponse model"""
 
-    id: int
+    uuid: UUID
     name: str
-    attributes: List[int] = []
+    attributes: List[int] | None = None

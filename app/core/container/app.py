@@ -9,7 +9,7 @@ from app.repository.sql.character_class_repository import (
 )
 from app.repository.sql.database import DatabaseRepositoryImpl
 from app.core.settings import get_settings
-from app.services.character_class import CreateCharacterClassServiceImpl
+from app.services.character_class import CharacterClassServiceImpl
 
 
 class AppContainer(containers.DeclarativeContainer):
@@ -60,7 +60,7 @@ class AppContainer(containers.DeclarativeContainer):
     )
 
     # Services
-    create_character_class_service = providers.Factory(
-        CreateCharacterClassServiceImpl,
+    character_class_service = providers.Factory(
+        CharacterClassServiceImpl,
         character_class_repository=character_class_repository,
     )

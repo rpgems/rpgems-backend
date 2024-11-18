@@ -7,11 +7,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
 from app.api.adapter.character_class import (
-    adapt_get_class_by_id,
-    adapt_list_all_classes,
-    adapt_search_classes_by_name,
     adapt_create_class_params,
-    adapt_delete_class_by_id,
     adapt_update_class_definition,
 )
 from app.api.schemas.character_class import (
@@ -19,46 +15,9 @@ from app.api.schemas.character_class import (
     CharacterClassRequest,
 )
 from app.core.container.app import AppContainer
-from app.services.character_class import CreateCharacterClassService
+from app.services.character_class import CharacterClassService
 
 router = APIRouter(prefix="/class", tags=["character_class"])
-
-
-@router.get(
-    path="/{class_id}",
-    responses={
-        status.HTTP_200_OK: {"description": "Class found, returning it"},
-        status.HTTP_400_BAD_REQUEST: {"description": "Invalid class id"},
-        status.HTTP_404_NOT_FOUND: {"description": "Class not found"},
-    },
-    response_model=CharacterClassResponse,
-)
-async def get_class(class_id: int) -> CharacterClassResponse:
-    """
-
-    :param class_id:
-    :return:
-    """
-    class_response = adapt_get_class_by_id(class_id)
-    return class_response
-
-
-@router.get(
-    path="/",
-    responses={
-        status.HTTP_200_OK: {"description": "Classes found, returning list of them"},
-        status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
-        status.HTTP_404_NOT_FOUND: {"description": "No class found"},
-    },
-    response_model=List[CharacterClassResponse],
-)
-async def list_classes() -> List[CharacterClassResponse]:
-    """
-
-    :return:
-    """
-    classes = adapt_list_all_classes()
-    return classes
 
 
 @router.get(
@@ -70,14 +29,70 @@ async def list_classes() -> List[CharacterClassResponse]:
     },
     response_model=List[CharacterClassResponse],
 )
-async def list_classes_by_name(name_search: str) -> List[CharacterClassResponse]:
+@inject
+async def list_classes_by_name(name_search: str,
+                               character_class_service: CharacterClassService = Depends(
+                                   Provide[AppContainer.character_class_service]
+                               )) -> List[CharacterClassResponse]:
     """
 
+    :param character_class_service:
     :param name_search:
     :return:
     """
-    classes = adapt_search_classes_by_name(name_search)
-    return classes
+    character_classes = await character_class_service.list_character_classes_by_name(name_search)
+    return [CharacterClassResponse(uuid=character_class.uuid, name=character_class.name) for
+            character_class in character_classes]
+
+
+@router.get(
+    path="/{class_uuid}",
+    responses={
+        status.HTTP_200_OK: {"description": "Class found, returning it"},
+        status.HTTP_400_BAD_REQUEST: {"description": "Invalid class uuid"},
+        status.HTTP_404_NOT_FOUND: {"description": "Class not found"},
+    },
+    response_model=CharacterClassResponse,
+)
+@inject
+async def get_class(class_uuid: str,
+                    character_class_service: CharacterClassService = Depends(
+                        Provide[AppContainer.character_class_service]),
+                    ) -> CharacterClassResponse:
+    """
+    Get a character class.
+
+    :param class_uuid:
+    :param character_class_service:
+    :return:
+    """
+    character_class = await character_class_service.get_by_uuid(character_class_uuid=class_uuid)
+    return CharacterClassResponse(uuid=character_class.uuid, name=character_class.name)
+
+
+@router.get(
+    path="/",
+    responses={
+        status.HTTP_200_OK: {"description": "Classes found, returning list of them"},
+        status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
+        status.HTTP_404_NOT_FOUND: {"description": "No class found"},
+    },
+    response_model=List[CharacterClassResponse],
+)
+@inject
+async def list_classes(character_class_service: CharacterClassService = Depends(
+    Provide[AppContainer.character_class_service]
+)) -> List[
+    CharacterClassResponse]:
+    """
+
+    :param character_class_service:
+    :return:
+    """
+
+    character_classes = await character_class_service.list_character_classes()
+    return [CharacterClassResponse(uuid=character_class.uuid, name=character_class.name) for
+            character_class in character_classes]
 
 
 @router.post(
@@ -90,29 +105,29 @@ async def list_classes_by_name(name_search: str) -> List[CharacterClassResponse]
 )
 @inject
 async def create_new_class(
-    character_class_request: CharacterClassRequest,
-    create_character_class_service: CreateCharacterClassService = Depends(
-        Provide[AppContainer.create_character_class_service]
-    ),
+        character_class_request: CharacterClassRequest,
+        character_class_service: CharacterClassService = Depends(
+            Provide[AppContainer.character_class_service]
+        ),
 ) -> CharacterClassResponse:
     """
     Creates a new Character Class.
 
     :param character_class_request: CharacterClassRequest;
-    :param create_character_class_service: CreateCharacterClassService;
+    :param character_class_service: CreateCharacterClassService;
     :return:
     """
 
-    character_class_create = adapt_create_class_params(character_class_request)
+    character_class = adapt_create_class_params(character_class_request)
 
-    character_class = await create_character_class_service.create(
-        character_class=character_class_create
+    character_class = await character_class_service.create(
+        character_class=character_class
     )
-    return CharacterClassResponse(id=character_class.id, name=character_class.name)
+    return CharacterClassResponse(uuid=character_class.uuid, name=character_class.name)
 
 
 @router.delete(
-    path="/{class_id}",
+    path="/{class_uuid}",
     responses={
         status.HTTP_204_NO_CONTENT: {"description": "Class deleted"},
         status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
@@ -122,39 +137,61 @@ async def create_new_class(
         },
     },
 )
-async def delete_class(class_id: int) -> JSONResponse:
+@inject
+async def delete_class(class_uuid: str,
+                       character_class_service: CharacterClassService = Depends(
+                           Provide[AppContainer.character_class_service]
+                       )) -> JSONResponse:
     """
 
-    :param class_id:
+    :param class_uuid:
+    :param character_class_service:
     :return:
     """
-    adapt_delete_class_by_id(class_id)
-    content = {"message": "Class deleted"}
-    headers = {"Content-Type": "application/json"}
+    delete_result = await character_class_service.delete(character_class_uuid=class_uuid)
+    if delete_result:
+        status_code = status.HTTP_204_NO_CONTENT
+        content = {"message": "Class deleted"}
+        headers = {"Content-Type": "application/json"}
+    else:
+        status_code = status.HTTP_400_BAD_REQUEST
+        content = {"message": "Invalid request"}
+        headers = {"Content-Type": "application/json"}
     return JSONResponse(
-        content=content, status_code=status.HTTP_204_NO_CONTENT, headers=headers
-    )
+        content=content, status_code=status_code, headers=headers)
 
 
 @router.put(
-    path="/{class_id}",
+    path="/{class_uuid}",
     responses={
         status.HTTP_200_OK: {"description": "Class updated"},
         status.HTTP_201_CREATED: {"description": "Class created"},
         status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
     },
 )
-async def update_class(class_id: int, class_definition: dict) -> JSONResponse:
+@inject
+async def update_class(class_uuid: str, character_class_request: CharacterClassRequest,
+                       character_class_service: CharacterClassService = Depends(
+                           Provide[AppContainer.character_class_service]
+                       )
+                       ) -> JSONResponse:
     """
 
-    :param class_id:
-    :param class_definition:
+    :param class_uuid:
+    :param character_class_request:
+    :param character_class_service:
     :return:
     """
-    result = adapt_update_class_definition(class_id, class_definition)
-    response = JSONResponse(
-        content=result["content"],
-        status_code=result["status"],
-        headers=result["headers"],
-    )
-    return response
+    character_class = adapt_update_class_definition(character_class_request)
+    update_result = await character_class_service.update(character_class_uuid=class_uuid,
+                                                         character_class=character_class)
+    if update_result:
+        status_code = status.HTTP_200_OK
+        content = {"message": "Class updated"}
+        headers = {"Content-Type": "application/json"}
+    else:
+        status_code = status.HTTP_400_BAD_REQUEST
+        content = {"message": "Invalid request"}
+        headers = {"Content-Type": "application/json"}
+    return JSONResponse(
+        content=content, status_code=status_code, headers=headers)

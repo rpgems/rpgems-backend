@@ -1,8 +1,8 @@
 """
-app.adapters.repositories.schemas module
+app.repository.schemas module
 """
 from pydantic import BaseModel, Field
 
 
-class CharacterClassCreate(BaseModel):
+class CharacterClass(BaseModel):
     name: str = Field(..., description="The name of the class")
