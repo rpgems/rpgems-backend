@@ -7,7 +7,6 @@ from typing import List
 from sqlalchemy import text
 
 from app.repository.sql.base_repository import BaseRepository
-from app.repository.schemas.character_class import CharacterClass
 from app.repository.sql.database import DatabaseRepository
 from app.repository.sql.exceptions import DatabaseError, NotFound
 from app.core.common import not_implemented_error

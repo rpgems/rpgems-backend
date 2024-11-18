@@ -7,6 +7,9 @@ from pydantic import BaseModel
 
 
 class CharacterClassRequest(BaseModel):
+    """
+    CharacterClassRequest model
+    """
     name: str
 
 
