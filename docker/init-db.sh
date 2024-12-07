@@ -8,6 +8,7 @@ revoke create on schema public from public;
 
 -- Create schema
 create schema if not exists $POSTGRES_DB;
+create schema if not exists "${POSTGRES_DB}_test";
 
 -- Set schema as default
 revoke create on schema public from public;

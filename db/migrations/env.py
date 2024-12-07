@@ -1,3 +1,4 @@
+import os
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -36,6 +37,9 @@ target_metadata = None
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+# Define o schema padrão
+default_schema = os.getenv("SCHEMA", "rpgems")
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -55,6 +59,9 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        version_table_schema=default_schema,  # Define o schema para a tabela de versões
+        include_schemas=True,  # Inclui schemas na configuração
+        render_as_batch=True  # Útil para migrações em múltiplos schemas
     )
 
     with context.begin_transaction():
@@ -75,9 +82,17 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            version_table_schema = default_schema,  # Define o schema para a tabela de versões
+            include_schemas = True,  # Inclui schemas na configuração
+            render_as_batch = True,  # Útil para migrações em múltiplos schemas
+            dialect_opts = {"paramstyle": "named"},
+        )
 
         with context.begin_transaction():
+            context.execute(sql=f"SET search_path TO {default_schema}, public;")
             context.run_migrations()
 
 

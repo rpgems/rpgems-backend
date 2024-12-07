@@ -14,7 +14,8 @@ from app.services.character_class import CreateCharacterClassServiceImpl
 
 class AppContainer(containers.DeclarativeContainer):
     """
-    AppContainer defines the creation of objects that will be injected into the app.api.routes module.
+    AppContainer defines the creation of objects that will be injected
+    into the app.api.routes module.
     """
 
     wiring_config = containers.WiringConfiguration(packages=["app.api.routes"])
