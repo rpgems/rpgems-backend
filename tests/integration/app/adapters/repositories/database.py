@@ -15,7 +15,8 @@ class TestDatabaseRepositoryImpl(DatabaseRepositoryImpl):
         @event.listens_for(self.sync_engine, "connect")
         def set_search_path(dbapi_connection, connection_record):
             cursor = dbapi_connection.cursor()
+            command = f"SET search_path TO {self.schema}"
             try:
-                cursor.execute(f"SET search_path TO {self.schema}")
+                cursor.execute(command)
             finally:
                 cursor.close()
